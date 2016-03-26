@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //initRecyclerView();
-        initScorecard();
+        initRecyclerView();
+        //initScorecard();
     }
 
     private void initRecyclerView() {
