@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/hole_card_view"
+        card_view:cardBackgroundColor="@color/btnBackground"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="0dp"
+        card_view:cardMaxElevation="0dp">
+
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@color/btnBackground">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+            <TextView android:layout_width="0dp"
+                      android:layout_weight="2"
+                      android:gravity="center"
+                      android:layout_height="match_parent"
+                      android:textSize="25sp"
+                      android:textColor="@color/holeNumberColor"
+                      android:background="@drawable/border"
+                      android:text="Hole"
+                      android:id="@+id/hole_number"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:textColor="@color/parColor"
+                    android:background="@drawable/border"
+                    android:layout_height="match_parent"
+                    android:textSize="25sp"
+                    android:id="@+id/par_number"
+                    android:text="Par"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:textColor="@color/textColor"
+                    android:background="@drawable/border"
+                    android:layout_height="match_parent"
+                    android:textSize="25sp"
+                    android:id="@+id/player_one"
+                    android:text="Simon"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:textColor="@color/textColor"
+                    android:background="@drawable/border"
+                    android:layout_height="match_parent"
+                    android:textSize="25sp"
+                    android:id="@+id/player_two"
+                    android:text="Paul"
+                    android:gravity="center"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:textColor="@color/textColor"
+                    android:background="@drawable/border"
+                    android:layout_height="match_parent"
+                    android:textSize="25sp"
+                    android:id="@+id/player_three"
+                    android:text="Christopher"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:textColor="@color/textColor"
+                    android:background="@drawable/border"
+                    android:layout_height="match_parent"
+                    android:textSize="25sp"
+                    android:id="@+id/player_four"
+                    android:text="Sebastian"/>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
