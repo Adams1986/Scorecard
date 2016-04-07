@@ -2,10 +2,16 @@
     <string name="app_name">Scorecard</string>
     <string name="type_username">Type Username, e.g.: 133"en dash"1860</string>
     <string name="type_password">Password: *****</string>
-    <string name="welcome_toolbar">Velkommen til GolfBox</string>
-    <string name="welcome_label">Indtast dine oplysninger</string>
+    <string name="main_menu_header">Velkommen til GolfBox</string>
+    <string name="login_header">Indtast dine oplysninger</string>
     <string name="btn_login_text">Login</string>
+    <string name="member_info_header">Dine oplysninger</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_scorecard_hole">Hole</string>
+    <string name="text_scorecard_par">Par</string>
+    <string name="scorecard_header">Scorekort</string>
+    <string name="member_name_header">Navn:</string>
+    <string name="member_address_header">Adresse:</string>
+    <string name="member_handicap_header">Handicap:</string>
+    <string name="member_clubs_header">Klub(ber):</string>
 </resources>

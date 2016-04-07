@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/hole_card_view"
-        card_view:cardBackgroundColor="@color/btnBackground"
+        card_view:cardBackgroundColor="@color/colorBg"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="1dp"
@@ -15,9 +15,9 @@
     <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/table_height"
             android:orientation="horizontal"
-            android:background="@color/btnBackground">
+            android:background="@color/colorBg">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -31,7 +31,6 @@
                       android:textSize="25sp"
                       android:textColor="@color/holeNumberColor"
                       android:background="@drawable/border"
-                      android:text="Hole"
                       android:id="@+id/hole_number"/>
 
             <TextView
@@ -42,8 +41,7 @@
                     android:background="@drawable/border"
                     android:layout_height="match_parent"
                     android:textSize="25sp"
-                    android:id="@+id/par_number"
-                    android:text="Par"/>
+                    android:id="@+id/par_number"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -53,8 +51,7 @@
                     android:background="@drawable/border"
                     android:layout_height="match_parent"
                     android:textSize="25sp"
-                    android:id="@+id/player_one"
-                    android:text="Simon"/>
+                    android:id="@+id/player_one"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -64,7 +61,6 @@
                     android:layout_height="match_parent"
                     android:textSize="25sp"
                     android:id="@+id/player_two"
-                    android:text="Paul"
                     android:gravity="center"/>
 
             <TextView
@@ -75,8 +71,7 @@
                     android:background="@drawable/border"
                     android:layout_height="match_parent"
                     android:textSize="25sp"
-                    android:id="@+id/player_three"
-                    android:text="Christopher"/>
+                    android:id="@+id/player_three"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -86,12 +81,9 @@
                     android:background="@drawable/border"
                     android:layout_height="match_parent"
                     android:textSize="25sp"
-                    android:id="@+id/player_four"
-                    android:text="Sebastian"/>
+                    android:id="@+id/player_four"/>
 
         </LinearLayout>
-
-
 
     </RelativeLayout>
 

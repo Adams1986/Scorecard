@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cardView"
-        card_view:cardBackgroundColor="@color/btnBackground"
+        card_view:cardBackgroundColor="@color/colorBg"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="@dimen/btn_corner_radius">
@@ -16,7 +16,7 @@
             android:layout_height="@dimen/btn_height"
             android:padding="10dp"
             android:orientation="vertical"
-            android:background="@color/btnBackground">
+            android:background="@color/colorBg">
 
         <ImageView
                 android:layout_width="80dp"

@@ -1,5 +1,6 @@
 package com.github.xb10.scorecard;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.github.xb10.scorecard.model.Member;
 
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MenuViewHolder> {
+public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapter.MenuViewHolder> {
 
     public static class MenuViewHolder extends RecyclerView.ViewHolder {
 
@@ -20,6 +22,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MenuVi
         TextView menuOption;
         ImageView menuImage;
         MenuOption currentItem;
+        Member currentMember;
 
         MenuViewHolder(View itemView) {
             super(itemView);
@@ -33,12 +36,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MenuVi
 
                     switch (currentItem.image){
 
+                        case R.drawable.gb_scorekort:
+                            Intent intent = new Intent(view.getContext() ,ScorecardActivity.class);
+                            intent.putExtra("currentMember", currentMember);
+                            view.getContext().startActivity(intent);
+
                         case R.drawable.bitch:
                             Toast.makeText(view.getContext(), "Bitch work for you", Toast.LENGTH_LONG).show();
                             break;
                         case R.drawable.logout:
                             //Intent i = new Intent(view.getContext(), LoginActivity.class);
                             view.getContext().startActivity(new Intent(view.getContext(), LoginActivity.class));
+                            ((Activity) view.getContext()).finish();
                             break;
                     }
                 }
@@ -51,9 +60,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MenuVi
     }
 
     private List<MenuOption> menuList;
+    private Member currentMember;
 
-    RecyclerAdapter(List<MenuOption> menuList){
+    MenuRecyclerAdapter(List<MenuOption> menuList, Member currentMember){
         this.menuList = menuList;
+        this.currentMember = currentMember;
     }
 
     @Override
@@ -74,6 +85,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MenuVi
         menuViewHolder.menuImage.setImageResource(menuList.get(i).image);
 
         menuViewHolder.currentItem = menuList.get(i);
+        menuViewHolder.currentMember = currentMember;
     }
 
     @Override

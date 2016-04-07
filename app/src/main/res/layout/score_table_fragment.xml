@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:layout_width="match_parent"
+                android:id="@+id/scroll_view"
+                android:layout_height="wrap_content"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/hole_view_front">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/total_front_nine"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/hole_view_front">
+
+                <include layout="@layout/horizontal_front__total_template"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/hole_view_back"
+                    android:layout_below="@+id/total_front_nine">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/total_back_back"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/hole_view_back">
+
+                <include layout="@layout/horizontal_back__total_template"/>
+
+            </LinearLayout>
+
+            <!-- Semi hack. Same height as toolbar to make sure everything shows...-->
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="?attr/actionBarSize"
+                      android:layout_below="@+id/total_back_back"
+                      android:id="@+id/test"
+                      android:text="Placeholder"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/toolbar_totals"
+             android:layout_height="?attr/actionBarSize"
+             android:layout_width="match_parent"
+             android:layout_alignParentBottom="true"/>
+</RelativeLayout>

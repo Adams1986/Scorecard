@@ -1,10 +1,13 @@
 package com.github.xb10.scorecard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import com.github.xb10.scorecard.model.Member;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,6 +16,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Member currentMember;
     private List<MenuOption> options;
     private LinkedList<HoleCardViewTemplate> holes;
     private RecyclerView rv;
@@ -22,18 +26,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+
+        LookAndFeel.setToolbarLogo(toolbar, MainActivity.this, R.drawable.boss, getString(R.string.main_menu_header));
+        setSupportActionBar(toolbar);
         initRecyclerView();
         //initScorecard();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (currentMember != null) {
+            Intent intent = new Intent(MainActivity.this, MemberInfoActivity.class);
+            intent.putExtra("currentMember", currentMember);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void initRecyclerView() {
 
         rv=(RecyclerView)findViewById(R.id.recycler_view);
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv.setLayoutManager(llm);
+        CustomLayoutManager layoutManager = new CustomLayoutManager(this);
+        //make not scrollable
+        layoutManager.setScrollEnabled(false);
+        rv.setLayoutManager(layoutManager);
         rv.setHasFixedSize(true);
 
         initData();
@@ -41,49 +68,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
 
-        options = new ArrayList<>();
-        options.add(new MenuOption("Scorekort", R.drawable.gb_scorekort));
-        options.add(new MenuOption("Statistik", R.drawable.gb_stats));
-        options.add(new MenuOption("Kasper", R.drawable.k_fly));
-        options.add(new MenuOption("Peter", R.drawable.bitch));
-        options.add(new MenuOption("C-Dawg", R.drawable.relax));
-        options.add(new MenuOption("Simon", R.drawable.boss));
-        options.add(new MenuOption("Simon", R.drawable.captain));
-        options.add(new MenuOption("Logout", R.drawable.logout));
+        if (getIntent().getSerializableExtra("currentMember") != null) {
+            options = new ArrayList<>();
+            options.add(new MenuOption("Scorekort", R.drawable.gb_scorekort));
+            options.add(new MenuOption("Statistik", R.drawable.gb_stats));
+            options.add(new MenuOption("Afstandsmåler", R.drawable.gb_distance_measurer));
+            options.add(new MenuOption("Logout", R.drawable.logout));
 
-        RecyclerAdapter menuAdapter = new RecyclerAdapter(options);
-        rv.setAdapter(menuAdapter);
-    }
+            currentMember = (Member) getIntent().getSerializableExtra("currentMember");
 
-    private void initScorecard(){
-
-        rv=(RecyclerView)findViewById(R.id.hole_view);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv.setLayoutManager(llm);
-        rv.setHasFixedSize(true);
-
-        initScorecardData();
-    }
-
-    private void initScorecardData(){
-
-        holes = new LinkedList<>();
-
-        //Player objects instead
-        String[]players = new String[]{"Simon", "Sebastian", "Christopher", "Paul"};
-
-        holes.add(new HoleCardViewTemplate(1, 3, new int[]{10,11,14,19}, players));
-        holes.add(new HoleCardViewTemplate(2, 5, new int[]{5,6,7,8}, players));
-        holes.add(new HoleCardViewTemplate(3, 4, new int[]{5,6,7,8}, players));
-        holes.add(new HoleCardViewTemplate(4, 3, new int[]{5,6,7,8}, players));
-        holes.add(new HoleCardViewTemplate(5, 4, new int[]{5,6,7,8}, players));
-        holes.add(new HoleCardViewTemplate(6, 4, new int[]{5,6,7,8}, players));
-        holes.add(new HoleCardViewTemplate(7, 5, new int[]{5,6,7,8}, players));
-        holes.add(new HoleCardViewTemplate(8, 3, new int[]{5,6,7,8}, players));
-        holes.add(new HoleCardViewTemplate(9, 4, new int[]{8,7,6,5}, players));
-
-        ScorecardRecyclerAdapter menuAdapter = new ScorecardRecyclerAdapter(holes);
-        rv.setAdapter(menuAdapter);
+            MenuRecyclerAdapter menuAdapter = new MenuRecyclerAdapter(options, currentMember);
+            rv.setAdapter(menuAdapter);
+        }
     }
 }

@@ -1,6 +1,6 @@
 package com.github.xb10.scorecard;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,67 +8,81 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.github.xb10.scorecard.model.Hole;
+import com.github.xb10.scorecard.model.Scorecard;
 
-import java.util.List;
+import java.util.ArrayList;
+
 
 public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecyclerAdapter.MenuViewHolder> {
+
+    private Scorecard scorecard;
+
+    public ScorecardRecyclerAdapter(Scorecard scorecard) {
+        this.scorecard = scorecard;
+    }
+
 
     public static class MenuViewHolder extends RecyclerView.ViewHolder {
 
         CardView cv;
         TextView holeNumber;
         TextView par;
-        TextView[]players;
-        /*TextView playerOne;
-        TextView playerTwo;
-        TextView playerThree;
-        TextView playerFour;*/
-        HoleCardViewTemplate currentItem;
+        TextView[] playerNameViews;
+        Scorecard scorecard;
+        int position;
 
-        MenuViewHolder(View itemView) {
+        public MenuViewHolder(final View itemView) {
+
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.hole_card_view);
             holeNumber = (TextView) itemView.findViewById(R.id.hole_number);
             par = (TextView) itemView.findViewById(R.id.par_number);
 
-            players = new TextView[4];
-            players[0] = (TextView) itemView.findViewById(R.id.player_one);
-            players[1] = (TextView) itemView.findViewById(R.id.player_two);
-            players[2] = (TextView) itemView.findViewById(R.id.player_three);
-            players[3] = (TextView) itemView.findViewById(R.id.player_four);
+            playerNameViews = new TextView[4];
+            playerNameViews[0] = (TextView) itemView.findViewById(R.id.player_one);
+            playerNameViews[1] = (TextView) itemView.findViewById(R.id.player_two);
+            playerNameViews[2] = (TextView) itemView.findViewById(R.id.player_three);
+            playerNameViews[3] = (TextView) itemView.findViewById(R.id.player_four);
 
-            /*playerOne = (TextView) itemView.findViewById(R.id.player_one);
-            playerTwo = (TextView) itemView.findViewById(R.id.player_two);
-            playerThree = (TextView) itemView.findViewById(R.id.player_three);
-            playerFour = (TextView) itemView.findViewById(R.id.player_four);*/
+/*            for (int i = 0; i < scorecard.getPlayers().size(); i++){
+
+                playerNameViews[i].setText(scorecard.getPlayers().get(i).getFirstName());
+            }*/
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    switch (currentItem.getHoleNumber()){
+                    switch (scorecard.getClub().getCourses().get(0).getHoles().get(position).getNumber()){
 
                         case 1:
-                            Toast.makeText(view.getContext(), "Bitch work for you", Toast.LENGTH_LONG).show();
+                        default:
+                            fragmentJump(scorecard, position);
+                            Toast.makeText(view.getContext(), "Default", Toast.LENGTH_SHORT).show();
                             break;
-                        case 2:
-                            //Intent i = new Intent(view.getContext(), LoginActivity.class);
-                            view.getContext().startActivity(new Intent(view.getContext(), LoginActivity.class));
-                            break;
+                    }
+
+                }
+
+                private void fragmentJump(Scorecard scorecard, int position) {
+                    HoleDetailsFragment fragment = new HoleDetailsFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(HoleDetailsFragment.ITEM_SELECTED_KEY, position);
+                    bundle.putSerializable(HoleDetailsFragment.SCORECARD_KEY, scorecard);
+                    fragment.setArguments(bundle);
+
+
+                    if(itemView.getContext() instanceof MainActivity){
+
+                        ScorecardActivity scorecardActivity = (ScorecardActivity) itemView.getContext();
+                        scorecardActivity.switchContent(fragment);
                     }
                 }
             });
         }
 
-        interface onClickListener{
 
-        }
-    }
-
-    private List<HoleCardViewTemplate> holes;
-
-    ScorecardRecyclerAdapter(List<HoleCardViewTemplate> holes){
-        this.holes = holes;
     }
 
     @Override
@@ -77,34 +91,34 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
     }
 
     @Override
-    public MenuViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.hole_card_view_template, viewGroup, false);
+    public MenuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hole_card_view_template, parent, false);
 
-        return new MenuViewHolder(v);
+        return new MenuViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MenuViewHolder menuViewHolder, int i) {
+    public void onBindViewHolder(MenuViewHolder holder, int position) {
 
-        menuViewHolder.holeNumber.setText(String.format("%d", holes.get(i).getHoleNumber()));
+        //TODO: multiple courses is a bit awkward
+        ArrayList<Hole> holes = scorecard.getClub().getCourses().get(0).getHoles();
 
-        menuViewHolder.par.setText(String.format("%d", holes.get(i).getPar()));
+        holder.holeNumber.setText(String.format("%d", holes.get(position).getNumber()));
+        holder.par.setText(String.format("%d", holes.get(position).getPar()));
 
-        for (int j = 0; j < holes.get(i).getPlayers().length; j++){
-
-            menuViewHolder.players[j].setText(String.format("%d",holes.get(i).getScores()[j]));
+        for (int i = 0; i < scorecard.getPlayers().size(); i++){
+            //getting player number 0-3 (1-4) from i and score 0-17 (1-18) from position
+            holder.playerNameViews[i].setText(String.format("%d", scorecard.getPlayers().get(i).getScores()[position]));
         }
 
-        /*menuViewHolder.playerOne.setText(holes.get(i).getPar());
-        menuViewHolder.playerTwo.setText(holes.get(i).getPar());
-        menuViewHolder.playerThree.setText(holes.get(i).getPar());
-        menuViewHolder.playerFour.setText(holes.get(i).getPar());*/
-
-        menuViewHolder.currentItem = holes.get(i);
+        //setting scorecard from view holder class equal to recycler class' scorecard
+        holder.scorecard = scorecard;
+        holder.position = position;
     }
 
     @Override
     public int getItemCount() {
-        return holes.size();
+
+        return scorecard.getClub().getCourses().get(0).getHoles().size();
     }
 }
