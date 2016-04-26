@@ -1,17 +1,24 @@
 <resources>
-    <string name="app_name">Scorecard</string>
-    <string name="type_username">Type Username, e.g.: 133"en dash"1860</string>
+    <string name="app_name">GB Scorekort</string>
+    <string name="type_username">Indtast brugernavn, e.g.: 133"en dash"1860</string>
     <string name="type_password">Password: *****</string>
     <string name="main_menu_header">Velkommen til GolfBox</string>
     <string name="login_header">Indtast dine oplysninger</string>
     <string name="btn_login_text">Login</string>
     <string name="member_info_header">Dine oplysninger</string>
 
-    <string name="text_scorecard_hole">Hole</string>
+    <string name="text_scorecard_hole">Hul</string>
     <string name="text_scorecard_par">Par</string>
     <string name="scorecard_header">Scorekort</string>
     <string name="member_name_header">Navn:</string>
     <string name="member_address_header">Adresse:</string>
     <string name="member_handicap_header">Handicap:</string>
     <string name="member_clubs_header">Klub(ber):</string>
+    <string name="search_courses">Find bane</string>
+    <string name="wizard_header">Søg på baner</string>
+    <string name="type_course_name">Søg på en bane</string>
+    <string name="marker_player_chooser_text">Markør</string>
+    <string name="length_chooser_text">Spil fra</string>
+    <string name="name_text">Navn</string>
+    <string name="btn_finish_wizard_text">Start</string>
 </resources>

@@ -165,4 +165,35 @@ public class Course implements Serializable{
         return parTotal;
 
     }
+
+    public ArrayList<Hole>getFrontNine(){
+
+        ArrayList<Hole>tempHoles = new ArrayList<>();
+
+        if (holes.size() == 18) {
+
+            for(int i = 0; i < (holes.size()/2); i++){
+                tempHoles.add(holes.get(i));
+            }
+            return tempHoles;
+        }
+        return holes;
+
+    }
+
+    public ArrayList<Hole>getBackNine(){
+
+        ArrayList<Hole>tempHoles = new ArrayList<>();
+
+        if (holes.size() == 18) {
+            for(int i = 9; i < holes.size(); i++){
+
+                tempHoles.add(holes.get(i));
+
+            }
+            return tempHoles;
+        }
+        //don't return any holes if only 9 holes, because then there is only front nine
+        return null;
+    }
 }

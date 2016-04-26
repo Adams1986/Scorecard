@@ -104,7 +104,10 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
 
-        if(!scoreInput.getText().toString().equals(""))
+        if(!scoreInput.getText().toString().equals("")) {
             mCallback.onScoreInput(Integer.parseInt(scoreInput.getText().toString()));
+
+            getFragmentManager().popBackStack();
+        }
     }
 }

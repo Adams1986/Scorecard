@@ -73,7 +73,8 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
                     fragment.setArguments(bundle);
 
 
-                    if(itemView.getContext() instanceof MainActivity){
+
+                    if(itemView.getContext() instanceof ScorecardActivity){
 
                         ScorecardActivity scorecardActivity = (ScorecardActivity) itemView.getContext();
                         scorecardActivity.switchContent(fragment);
@@ -107,8 +108,11 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
         holder.par.setText(String.format("%d", holes.get(position).getPar()));
 
         for (int i = 0; i < scorecard.getPlayers().size(); i++){
-            //getting player number 0-3 (1-4) from i and score 0-17 (1-18) from position
-            holder.playerNameViews[i].setText(String.format("%d", scorecard.getPlayers().get(i).getScores()[position]));
+
+            if (scorecard.getPlayers().get(i).getScores()[position] != 0) {
+                //getting player number 0-3 (1-4) from i and score 0-17 (1-18) from position
+                holder.playerNameViews[i].setText(String.format("%d", scorecard.getPlayers().get(i).getScores()[position]));
+            }
         }
 
         //setting scorecard from view holder class equal to recycler class' scorecard

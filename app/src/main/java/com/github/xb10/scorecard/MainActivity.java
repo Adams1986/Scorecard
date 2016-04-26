@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         LookAndFeel.setToolbarLogo(toolbar, MainActivity.this, R.drawable.boss, getString(R.string.main_menu_header));
         setSupportActionBar(toolbar);
         initRecyclerView();
-        //initScorecard();
     }
 
     @Override
@@ -72,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             options = new ArrayList<>();
             options.add(new MenuOption("Scorekort", R.drawable.gb_scorekort));
             options.add(new MenuOption("Statistik", R.drawable.gb_stats));
+            options.add(new MenuOption("Til godkendelse", R.drawable.gb_marker_approv));
             options.add(new MenuOption("Afstandsmåler", R.drawable.gb_distance_measurer));
             options.add(new MenuOption("Logout", R.drawable.logout));
 

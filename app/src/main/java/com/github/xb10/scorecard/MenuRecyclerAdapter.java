@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.xb10.scorecard.model.Member;
+import com.github.xb10.scorecard.model.Scorecard;
 
 import java.util.List;
 
@@ -37,13 +38,20 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
                     switch (currentItem.image){
 
                         case R.drawable.gb_scorekort:
-                            Intent intent = new Intent(view.getContext() ,ScorecardActivity.class);
+                            Intent intent = new Intent(view.getContext(), WizardActivity.class);
                             intent.putExtra("currentMember", currentMember);
                             view.getContext().startActivity(intent);
 
-                        case R.drawable.bitch:
-                            Toast.makeText(view.getContext(), "Bitch work for you", Toast.LENGTH_LONG).show();
+                        case R.drawable.gb_stats:
+                            Toast.makeText(view.getContext(), "Statistik", Toast.LENGTH_LONG).show();
                             break;
+
+                        case R.drawable.gb_marker_approv:
+//                            Intent intent2 = new Intent(view.getContext(), ScorecardActivity.class);
+//                            intent2.putExtra("currentMember", currentMember);
+//                            view.getContext().startActivity(intent2);
+                            break;
+
                         case R.drawable.logout:
                             //Intent i = new Intent(view.getContext(), LoginActivity.class);
                             view.getContext().startActivity(new Intent(view.getContext(), LoginActivity.class));
@@ -52,10 +60,6 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
                     }
                 }
             });
-        }
-
-        interface onClickListener{
-
         }
     }
 

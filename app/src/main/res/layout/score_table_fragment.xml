@@ -2,9 +2,13 @@
 <RelativeLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/scorecard_header" android:id="@+id/scorecard_header"/>
+
     <ScrollView android:layout_width="match_parent"
                 android:id="@+id/scroll_view"
-                android:layout_height="wrap_content"
+                android:layout_height="459dp"
+                android:layout_below="@id/scorecard_header"
                 xmlns:android="http://schemas.android.com/apk/res/android">
 
         <RelativeLayout
@@ -47,13 +51,6 @@
 
             </LinearLayout>
 
-            <!-- Semi hack. Same height as toolbar to make sure everything shows...-->
-            <TextView android:layout_width="match_parent"
-                      android:layout_height="?attr/actionBarSize"
-                      android:layout_below="@+id/total_back_back"
-                      android:id="@+id/test"
-                      android:text="Placeholder"/>
-
         </RelativeLayout>
 
     </ScrollView>
@@ -61,5 +58,6 @@
     <include layout="@layout/toolbar_totals"
              android:layout_height="?attr/actionBarSize"
              android:layout_width="match_parent"
-             android:layout_alignParentBottom="true"/>
+             android:layout_alignParentBottom="true" android:id="@+id/include"/>
+
 </RelativeLayout>

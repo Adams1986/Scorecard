@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -79,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private class LoginTask extends AsyncTask<Void, Void, Boolean>{
+    private class LoginTask extends AsyncTask<String, Void, String>{
 
         private Member currentMember;
 
@@ -89,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected String doInBackground(String... params) {
 
             try {
                 //http://www.xyzws.com/javafaq/how-to-use-httpurlconnection-post-data-to-web-server/139 See there for method
@@ -99,52 +100,54 @@ public class LoginActivity extends AppCompatActivity {
                 //convert to JSON with GSON lib
                 String urlParameters = new Gson().toJson(currentMember);
 
-//                String messageFromServer = ServerConnection.executePost("http://192.168.43.110/GolfAppServer/Model/Authentication.php", urlParameters);
-                String messageFromServer = ServerConnection.executePost("http://192.168.1.40/GolfAppServer/Model/Authentication.php", urlParameters);
+                String json = ServerConnection.executePost("http://192.168.43.110/GolfAppServer/Model/Authentication.php", urlParameters);
+//                String messageFromServer = ServerConnection.executePost("http://192.168.1.40/GolfAppServer/Model/Authentication.php", urlParameters);
 
-                if (messageFromServer != null) {
+                HashMap<String, String> dataFromServer = new Gson().fromJson(json, HashMap.class);
 
+
+
+                if (dataFromServer.get("message") != null) {
+
+                    String messageFromServer = dataFromServer.get("message");
                     //For some reason white space... from PHP
-                    if (messageFromServer.trim().equals("Login successful")) {
+                    if (messageFromServer.equals("Login successful")) {
 
                         //New server call to get full member information
-//                        String dataFromServer = ServerConnection.executePost("http://192.168.43.110/GolfAppServer/Model/MemberInformation.php", urlParameters);
-                        String dataFromServer = ServerConnection.executePost("http://192.168.1.40/GolfAppServer/Model/MemberInformation.php", urlParameters);
-                        currentMember = new Gson().fromJson(dataFromServer.trim(), Member.class);
-                        return true;
-                    }
-                    else {
-                        //Toast.makeText(LoginActivity.this, messageFromServer, Toast.LENGTH_LONG).show();
-                    }
+                        json = ServerConnection.executePost("http://192.168.43.110/GolfAppServer/Model/MemberInformation.php", urlParameters);
+//                        String dataFromServer = ServerConnection.executePost("http://192.168.1.40/GolfAppServer/Model/MemberInformation.php", urlParameters);
 
-                    Log.d(messageFromServer, messageFromServer);
+                        if (json != null) {
+
+                            currentMember = new Gson().fromJson(json, Member.class);
+                        }
+                    }
+                    return messageFromServer;
                 }
-                else {
-                    //Toast.makeText(LoginActivity.this, "Server did not respond. Try again later", Toast.LENGTH_LONG).show();
-                }
+
             }
             catch (UnsupportedEncodingException e) {
-                return false;
+                //do something?
             }
-
-            return false;
+            return "Ingen forbindelse til serveren. Prøv igen senere";
         }
 
         @Override
-        protected void onPostExecute(Boolean authenticated) {
+        protected void onPostExecute(String message) {
 
             loginTask = null;
             showProgress(false);
 
-            if (authenticated){
+            //'Random' check of other parameter of the currentMember to check that it is set
+            if (message.equals("Login successful")) {
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("currentMember" ,currentMember);
                 startActivity(intent);
             }
-            //TODO: fix errormsgs
             else {
-                passwordView.setError("Noget gik galt");
+
+                passwordView.setError(message);
             }
         }
 
@@ -156,6 +159,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //Animation
     private void showProgress(final boolean show) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {

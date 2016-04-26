@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.github.xb10.scorecard.model.*;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -24,7 +23,13 @@ public class TableFragment extends Fragment {
 
     private Scorecard currentScorecard;
     private RecyclerView rv;
-    private Player simon;
+
+    private TableListener activityCommander;
+
+    public interface TableListener{
+        public void openScorecardSummary();
+        public Scorecard getScorecard();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -35,7 +40,8 @@ public class TableFragment extends Fragment {
         if (context instanceof Activity){
 
             a = (Activity) context;
-            ((ScorecardActivity) a).setPlayerName("Simon");
+            activityCommander = (TableListener) a;
+            currentScorecard = activityCommander.getScorecard();
         }
     }
 
@@ -44,37 +50,38 @@ public class TableFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.score_table_fragment, container, false);
+        TextView[] playerNames = new TextView[4];
+        playerNames[0] = (TextView) view.findViewById(R.id.player_one_name);
+        playerNames[1] = (TextView) view.findViewById(R.id.player_two_name);
+        playerNames[2] = (TextView) view.findViewById(R.id.player_three_name);
+        playerNames[3] = (TextView) view.findViewById(R.id.player_four_name);
 
+        for(int i = 0; i < currentScorecard.getPlayers().size(); i++){
+            playerNames[i].setText(currentScorecard.getPlayers().get(i).getFirstName());
+        }
 
-        ArrayList<Hole>frontNine = new ArrayList<>();
+        setHasOptionsMenu(true);
 
-        frontNine.add(new Hole(1, 15, 3, 145));
-        frontNine.add(new Hole(2, 3, 5, 449));
-        frontNine.add(new Hole(3, 5, 4, 393));
-        frontNine.add(new Hole(4, 13, 3, 153));
-        frontNine.add(new Hole(5, 7, 4, 332));
-        frontNine.add(new Hole(6, 11, 4, 291));
-        frontNine.add(new Hole(7, 1, 5, 469));
-        frontNine.add(new Hole(8, 17, 3, 138));
-        frontNine.add(new Hole(9, 9, 4, 301));
+        initScorecard(R.id.hole_view_front, view, currentScorecard.getClub().getCourses().get(0).getFrontNine());
 
-        ArrayList<Hole>backNine = new ArrayList<>();
-
-        backNine.add(new Hole(10, 12, 4, 338));
-        backNine.add(new Hole(11, 14, 4, 313));
-        backNine.add(new Hole(12, 10, 4, 356));
-        backNine.add(new Hole(13, 2, 5, 486));
-        backNine.add(new Hole(14, 6, 4, 386));
-        backNine.add(new Hole(15, 16, 3, 129));
-        backNine.add(new Hole(16, 4, 5, 467));
-        backNine.add(new Hole(17, 18, 3, 113));
-        backNine.add(new Hole(18, 8, 4, 326));
-
-        //init stuff
-        initScorecard(R.id.hole_view_front, view, frontNine);
-        initScorecard(R.id.hole_view_back, view, backNine);
+        if (currentScorecard.getClub().getCourses().get(0).getBackNine() != null) {
+            initScorecard(R.id.hole_view_back, view, currentScorecard.getClub().getCourses().get(0).getBackNine());
+        }
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.scorecard, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        activityCommander.openScorecardSummary();
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void initScorecard(int id, View view, ArrayList<Hole>holes){
@@ -86,21 +93,33 @@ public class TableFragment extends Fragment {
         rv.setLayoutManager(layoutManager);
         rv.setHasFixedSize(true);
 
-        initScorecardData(holes);
+        //Stupid workaround
+        Scorecard temp = new Scorecard();
+
+        Course tempCourse = new Course(currentScorecard.getClub().getCourses().get(0).getName(), holes,
+                currentScorecard.getClub().getCourses().get(0).getSlope(),
+                currentScorecard.getClub().getCourses().get(0).getRating(),
+                currentScorecard.getClub().getCourses().get(0).getMetaData());
+        ArrayList<Course>tempCourses = new ArrayList<>();
+        tempCourses.add(tempCourse);
+
+        Club tempClub = new Club();
+        tempClub.setCourses(tempCourses);
+        tempClub.setId(currentScorecard.getClub().getId());
+        tempClub.setName(currentScorecard.getClub().getName());
+        temp.setClub(tempClub);
+
+        temp.setPlayers(currentScorecard.getPlayers());
+        temp.getClub().setCourses(tempCourses);
+
+
+        ScorecardRecyclerAdapter adapter = new ScorecardRecyclerAdapter(temp);
+        rv.setAdapter(adapter);
     }
+
 
     private void initScorecardData(ArrayList<Hole> holes){
 
-        simon = new Player();
-        simon.setFirstName("Simon");
-        simon.setHandicap(15.5);
-        simon.setScores(new int[]{5, 4, 3, 5, 5, 7, 8, 6, 5,5, 4, 3, 5, 5, 7, 8, 6, 5});
-
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(simon);
-        //public Player(String firstName, String lastName, String id, String password, double handicap, ArrayList<String> clubs,int[] scores)
-
-        Club harekaer = new Club();
 
         //TODO: Perspective latlong!!!!!!!!
         CourseMetaData hk18Metadata = new CourseMetaData(new float[]{
@@ -126,20 +145,5 @@ public class TableFragment extends Fragment {
                         new LatLng(55.488623, 12.095139), new LatLng(55.485694, 12.092076), new LatLng(55.484979, 12.090102),
                         new LatLng(55.489033, 12.094142), new LatLng(55.489511, 12.095471), new LatLng(55.489089, 12.104031),
                 });
-
-        Course hk18 = new Course("Harekaer 18-Hullers", holes, 132, 70.6, hk18Metadata);
-
-        ArrayList<Course>courses = new ArrayList<>();
-        courses.add(hk18);
-
-        harekaer.setCourses(courses);
-
-        currentScorecard = new Scorecard();
-        currentScorecard.setClub(harekaer);
-        currentScorecard.setPlayers(players);
-
-        ScorecardRecyclerAdapter adapter = new ScorecardRecyclerAdapter(currentScorecard);
-
-        rv.setAdapter(adapter);
     }
 }

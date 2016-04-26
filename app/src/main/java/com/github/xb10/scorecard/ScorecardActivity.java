@@ -17,10 +17,11 @@ import com.github.xb10.scorecard.model.Scorecard;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class ScorecardActivity extends AppCompatActivity {
+public class ScorecardActivity extends AppCompatActivity implements TableFragment.TableListener, HoleDetailsFragment.OnHoleDetailsListener {
 
 
     private Toolbar toolbar;
+    private Scorecard currentScorecard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +43,11 @@ public class ScorecardActivity extends AppCompatActivity {
             }
         });
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container, new TableFragment()).commit();
+        if (getIntent().getSerializableExtra("Scorecard") != null) {
+
+            currentScorecard = (Scorecard) getIntent().getSerializableExtra("Scorecard");
+            getSupportFragmentManager().beginTransaction().add(R.id.container, new TableFragment()).commit();
+        }
     }
 
     //TODO: initialize scorecard for players and course
@@ -72,12 +77,26 @@ public class ScorecardActivity extends AppCompatActivity {
     void switchContent(Fragment holeDetailsFragment){
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, holeDetailsFragment).commit();
+        ft.replace(R.id.container, holeDetailsFragment).addToBackStack("Table").commit();
     }
 
-    public void setPlayerName(String name) {
+    @Override
+    public void openScorecardSummary() {
 
-        TextView textView = (TextView) findViewById(R.id.player_one_name);
-        textView.setText(name);
+        //TODO: add the summary fragment to be opened here
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //ft.replace(R.id.container, new ).commit();
+    }
+
+    //Send scorecard to tablefragment
+    @Override
+    public Scorecard getScorecard() {
+
+        return currentScorecard;
+    }
+
+    @Override
+    public void onScoreInput(int score) {
+        currentScorecard.getPlayers().get(0).getScores()[0] = score;
     }
 }
