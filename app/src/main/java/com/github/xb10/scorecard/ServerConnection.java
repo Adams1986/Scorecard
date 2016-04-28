@@ -33,7 +33,8 @@ public class ServerConnection {
             connection.setRequestProperty("Content-Type", "" + Integer.toString(urlParameters.getBytes().length));
 
             //Neccessary or not?
-            connection.setRequestProperty("Content-Language", "en-US");
+            connection.setRequestProperty("Content-Language", "da");
+            connection.setRequestProperty("Content-Type", "charset=utf-8");
             connection.setUseCaches(false);
             connection.setDoInput(true);
             connection.setDoOutput(true);
