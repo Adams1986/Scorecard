@@ -2,6 +2,7 @@ package com.github.xb10.scorecard.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Player extends Member implements Serializable {
@@ -30,6 +31,42 @@ public class Player extends Member implements Serializable {
     public int[] getScores() {
         return scores;
     }
+
+    public int getFrontNineTotal(){
+
+        int total = 0;
+        int noOfHoles = scores.length == 18 ? 9 : scores.length;
+
+            for (int i = 0; i < noOfHoles; i++){
+                total += scores[i];
+            }
+        return total;
+    }
+
+    public int getBackNineTotal(){
+
+        //set to -1 one for error handling
+        int total = 0;
+
+        if (scores.length == 18){
+            for (int i = 9; i < scores.length; i++){
+                total += scores[i];
+            }
+            return total;
+        }
+        return -1;
+    }
+
+
+    public int getScoreTotal() {
+        int total = 0;
+
+        for (int i = 0; i < scores.length; i++){
+            total += scores[i];
+        }
+        return total;
+    }
+
 
     /**
      * Method probably used after every hole registered
@@ -78,7 +115,7 @@ public class Player extends Member implements Serializable {
      * @param currentCourse
      * @return
      */
-    public int getPoints(Course currentCourse){
+    public int getTotalPoints(Course currentCourse){
 
         int points = 0;
         int[] strokes = getStrokes(currentCourse);
@@ -100,6 +137,27 @@ public class Player extends Member implements Serializable {
         return points;
     }
 
+
+    //Get points on a hole
+    public int getPoints(Course currentCourse, int holeNumber){
+
+        int points = 0;
+        int[] strokes = getStrokes(currentCourse);
+
+        //Match score with hole only if a score has been registered on the hole.
+        if(scores[holeNumber] != 0){
+
+            //net score is the amount you have when you add the par and strokes on the hole together and then deduct your score on the hole.
+            int netScore = currentCourse.getHoles().get(holeNumber).getPar() + strokes[holeNumber] - scores[holeNumber];
+
+            //You can't get negative points. This check makes sure of that. If your netscore is -1, you get 1 point. 0 and you get 2 points.
+            //Adds all your points together
+            points = (netScore + 2) > 0 ? netScore + 2 : 0;
+        }
+        //Returns the aggregated points for every hole.
+        return points;
+    }
+
     /**
      * Another method to be used after each entry of a score on a hole
      * @param currentCourse
@@ -111,7 +169,9 @@ public class Player extends Member implements Serializable {
 
         for (int i = 0; i < scores.length; i++){
 
-            overUnderPar += scores[i] - currentCourse.getHoles().get(i).getPar();
+            if (scores[i] != 0) {
+                overUnderPar += scores[i] - currentCourse.getHoles().get(i).getPar();
+            }
         }
 
         return overUnderPar;

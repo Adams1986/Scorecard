@@ -4,18 +4,208 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:weightSum="1">
 
-    <TextView
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorBg"
+            android:layout_height="@dimen/btn_height">
+
+        <ImageView android:layout_width="0dp"
+                   android:layout_weight="2"
+                   android:src="@drawable/gb_nav_bg_golfer"
+                   android:paddingLeft="80dp"
+                   android:paddingStart="80dp"
+                   android:layout_height="match_parent"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:textSize="@dimen/course_list_text_size"
+                android:gravity="center_vertical"
+                android:id="@+id/hole_details_player_name"
+                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/length"/>
+            android:scrollbars="none"
+            android:id="@+id/recycler_view">
 
-    <EditText android:layout_width="match_parent"
-              android:inputType="number"
-              android:layout_height="wrap_content"
-              android:id="@+id/score_input"/>
 
-    <Button
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnSaveInput"/>
+            android:id="@+id/hole_details_card_view"
+            card_view:cardBackgroundColor="@color/colorBg"
+            android:clickable="false"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardElevation="0dp"
+            card_view:cardMaxElevation="0dp">
+
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:background="@color/colorBg">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="match_parent"
+                    android:id="@+id/hole_points_label_text_view"
+                    android:textColor="@color/textColor"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/border_gray"
+                    android:textSize="@dimen/course_list_text_size"
+                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:text="@string/hole_details_points_text"/>
+
+
+            <TextView android:layout_width="0dp"
+                      android:layout_weight="9"
+                      android:layout_height="match_parent"
+                      android:textSize="@dimen/course_list_text_size"
+                      android:gravity="end|center_vertical"
+                      android:background="@drawable/border_gray"
+                      android:id="@+id/hole_points_info_text_view"
+                      android:textColor="@color/textColor"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView"
+            card_view:cardBackgroundColor="@color/colorBg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardElevation="0dp"
+            card_view:cardMaxElevation="0dp">
+
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:orientation="horizontal"
+                android:background="@color/colorBg">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="match_parent"
+                    android:id="@+id/hole_score_label_text_view"
+                    android:text="@string/hole_details_stroke_text"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/textColor"
+                    android:background="@drawable/border_gray"
+                    android:textSize="@dimen/course_list_text_size"
+                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"/>
+
+            <LinearLayout
+                    android:background="@drawable/border_gray"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="3">
+
+                <Button android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="end"
+                        android:background="@drawable/minus"
+                        android:id="@+id/hole_details_btn_minus"
+                        android:textColor="@color/textColor" android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp" android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+
+            <EditText android:layout_width="0dp"
+                      android:layout_weight="3"
+                      android:layout_height="match_parent"
+                      android:textSize="@dimen/course_list_text_size"
+                      android:gravity="center"
+                      android:padding="10dp"
+                      android:focusable="false"
+                      android:cursorVisible="true"
+                      android:background="@drawable/border_gray"
+                      android:id="@+id/hole_details_score_edit_view"
+                      android:textColor="@color/textColor"/>
+
+            <LinearLayout
+                    android:background="@drawable/border_gray"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="3">
+
+                <Button android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="30sp"
+                        android:gravity="end"
+                        android:background="@drawable/plus"
+                        android:id="@+id/hole_details_btn_plus" android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp" android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_save_input"
+            android:layout_marginTop="50dp"
+            card_view:cardBackgroundColor="@color/colorBg"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="@dimen/btn_corner_radius">
+
+        <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_height"
+                android:padding="10dp"
+                android:orientation="vertical"
+                android:background="@color/colorBg">
+
+            <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/gb_checked_checkbox"
+                    android:id="@+id/hole_details_image_view"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"/>
+
+
+            <TextView android:layout_width="300dp"
+                      android:layout_height="wrap_content"
+                      android:textSize="30sp"
+                      android:gravity="start"
+                      android:textColor="#FFF"
+                      android:text="@string/btn_save_hole_text"
+                      android:layout_toRightOf="@id/hole_details_image_view"
+                      android:layout_toEndOf="@id/hole_details_image_view"
+                      android:layout_alignParentEnd="true"
+                      android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 </LinearLayout>

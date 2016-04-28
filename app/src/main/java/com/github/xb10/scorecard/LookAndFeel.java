@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.StringDef;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 
@@ -26,5 +27,10 @@ public class LookAndFeel {
         Drawable dr = ContextCompat.getDrawable(context, iconId);
         Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
         return new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, 50, 50, true));
+    }
+
+    static String formatInteger(int number){
+
+        return String.format("%d", number);
     }
 }

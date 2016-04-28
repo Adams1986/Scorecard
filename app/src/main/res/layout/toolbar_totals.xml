@@ -9,13 +9,14 @@
               android:gravity="center"
               android:layout_height="match_parent"
               android:textColor="@color/textColor"
-              android:text="Total"
+              android:text="@string/score_totals_table_text"
               android:background="@drawable/border"/>
 
     <TextView
             android:layout_width="0dp"
             android:layout_weight="2"
             android:gravity="center"
+            android:id="@+id/par_total_total"
             android:textColor="@color/textColor"
             android:background="@drawable/border"
             android:layout_height="match_parent"/>
@@ -24,6 +25,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:gravity="center"
+            android:id="@+id/player_one_score_total"
             android:textColor="@color/textColor"
             android:background="@drawable/border"
             android:layout_height="match_parent"/>
@@ -33,6 +35,7 @@
             android:layout_weight="3"
             android:textColor="@color/textColor"
             android:background="@drawable/border"
+            android:id="@+id/player_two_score_total"
             android:layout_height="match_parent"
             android:gravity="center"/>
 
@@ -41,6 +44,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:textColor="@color/textColor"
+            android:id="@+id/player_three_score_total"
             android:background="@drawable/border"
             android:layout_height="match_parent"/>
 
@@ -49,6 +53,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:textColor="@color/textColor"
+            android:id="@+id/player_four_score_total"
             android:background="@drawable/border"
             android:layout_height="match_parent"/>
 

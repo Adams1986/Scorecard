@@ -59,7 +59,7 @@ public class PlayerChooserFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: involve activity and go to player search
-                Toast.makeText(getContext(), "Item no. " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Tilføj spiller " + (position+1), Toast.LENGTH_SHORT).show();
             }
         });
 

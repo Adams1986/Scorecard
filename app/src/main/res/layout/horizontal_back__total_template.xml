@@ -9,7 +9,7 @@
               android:gravity="center"
               android:layout_height="match_parent"
               android:textColor="@color/textColor"
-              android:text="Ind"
+              android:text="@string/back_nine_table_text"
               android:background="@drawable/border"/>
 
     <TextView
@@ -17,6 +17,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:textColor="@color/textColor"
+            android:id="@+id/par_total_back_nine"
             android:background="@drawable/border"
             android:layout_height="match_parent"/>
 
@@ -24,6 +25,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:gravity="center"
+            android:id="@+id/player_one_back_nine_total"
             android:textColor="@color/textColor"
             android:background="@drawable/border"
             android:layout_height="match_parent"/>
@@ -32,6 +34,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:textColor="@color/textColor"
+            android:id="@+id/player_two_back_nine_total"
             android:background="@drawable/border"
             android:layout_height="match_parent"
             android:gravity="center"/>
@@ -41,6 +44,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:textColor="@color/textColor"
+            android:id="@+id/player_three_back_nine_total"
             android:background="@drawable/border"
             android:layout_height="match_parent"/>
 
@@ -49,6 +53,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:textColor="@color/textColor"
+            android:id="@+id/player_four_back_nine_total"
             android:background="@drawable/border"
             android:layout_height="match_parent"/>
 

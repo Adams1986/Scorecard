@@ -9,7 +9,7 @@
               android:layout_weight="2"
               android:gravity="center"
               android:layout_height="match_parent"
-              android:text="Ud"
+              android:text="@string/front_nine_table_text"
               android:textColor="@color/textColor"/>
 
     <TextView
@@ -17,7 +17,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:textColor="@color/textColor"
-
+            android:id="@+id/par_total_front_nine"
             android:layout_height="match_parent"/>
 
     <TextView
@@ -25,14 +25,14 @@
             android:layout_weight="3"
             android:gravity="center"
             android:textColor="@color/textColor"
-
+            android:id="@+id/player_one_front_nine_total"
             android:layout_height="match_parent"/>
 
     <TextView
             android:layout_width="0dp"
             android:layout_weight="3"
             android:textColor="@color/textColor"
-
+            android:id="@+id/player_two_front_nine_total"
             android:layout_height="match_parent"
             android:gravity="center"/>
 
@@ -41,7 +41,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:textColor="@color/textColor"
-
+            android:id="@+id/player_three_front_nine_total"
             android:layout_height="match_parent"/>
 
     <TextView
@@ -49,7 +49,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:textColor="@color/textColor"
-
+            android:id="@+id/player_four_front_nine_total"
             android:layout_height="match_parent"/>
 
 </LinearLayout>

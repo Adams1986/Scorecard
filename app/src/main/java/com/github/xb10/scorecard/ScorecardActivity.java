@@ -50,7 +50,7 @@ public class ScorecardActivity extends AppCompatActivity implements TableFragmen
         }
     }
 
-    //TODO: initialize scorecard for players and course
+    //TODO: initialize scorecard for players and course for field research
     private void initPlayers(){
 
     }
@@ -84,8 +84,13 @@ public class ScorecardActivity extends AppCompatActivity implements TableFragmen
     public void openScorecardSummary() {
 
         //TODO: add the summary fragment to be opened here
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ScorecardSummaryFragment.SCORECARD_KEY, currentScorecard);
+        ScorecardSummaryFragment fragment = new ScorecardSummaryFragment();
+        fragment.setArguments(bundle);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.container, new ).commit();
+        ft.replace(R.id.container, fragment).addToBackStack("Table").commit();
     }
 
     //Send scorecard to tablefragment
@@ -96,7 +101,14 @@ public class ScorecardActivity extends AppCompatActivity implements TableFragmen
     }
 
     @Override
-    public void onScoreInput(int score) {
-        currentScorecard.getPlayers().get(0).getScores()[0] = score;
+    public void endGame(Scorecard currentScorecard) {
+        this.currentScorecard = currentScorecard;
+        finish();
+    }
+
+    @Override
+    public void onScoreInput(int score, int index) {
+
+        currentScorecard.getPlayers().get(0).getScores()[index] = score;
     }
 }

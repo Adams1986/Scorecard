@@ -17,9 +17,11 @@ import java.util.ArrayList;
 public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecyclerAdapter.MenuViewHolder> {
 
     private Scorecard scorecard;
+    private boolean isFrontNine;
 
-    public ScorecardRecyclerAdapter(Scorecard scorecard) {
+    public ScorecardRecyclerAdapter(Scorecard scorecard, boolean isFrontNine) {
         this.scorecard = scorecard;
+        this.isFrontNine = isFrontNine;
     }
 
 
@@ -30,6 +32,7 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
         TextView par;
         TextView[] playerNameViews;
         Scorecard scorecard;
+        boolean isFrontNine;
         int position;
 
         public MenuViewHolder(final View itemView) {
@@ -58,6 +61,10 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
 
                         case 1:
                         default:
+                            if(!isFrontNine){
+                                //If backnine make sure index is added 9 so right hole
+                                position += 9;
+                            }
                             fragmentJump(scorecard, position);
                             Toast.makeText(view.getContext(), "Default", Toast.LENGTH_SHORT).show();
                             break;
@@ -101,11 +108,26 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
     @Override
     public void onBindViewHolder(MenuViewHolder holder, int position) {
 
+        //setting scorecard from view holder class equal to recycler class' scorecard
+        holder.scorecard = scorecard;
+        holder.position = position;
+        holder.isFrontNine = isFrontNine;
+
         //TODO: multiple courses is a bit awkward
-        ArrayList<Hole> holes = scorecard.getClub().getCourses().get(0).getHoles();
+        ArrayList<Hole> holes = null;
+        if (isFrontNine) {
+            holes = scorecard.getClub().getCourses().get(0).getFrontNine();
+        }
+        else {
+            holes = scorecard.getClub().getCourses().get(0).getBackNine();
+        }
 
         holder.holeNumber.setText(String.format("%d", holes.get(position).getNumber()));
         holder.par.setText(String.format("%d", holes.get(position).getPar()));
+
+        if (!isFrontNine){
+            position += 9;
+        }
 
         for (int i = 0; i < scorecard.getPlayers().size(); i++){
 
@@ -114,15 +136,14 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
                 holder.playerNameViews[i].setText(String.format("%d", scorecard.getPlayers().get(i).getScores()[position]));
             }
         }
-
-        //setting scorecard from view holder class equal to recycler class' scorecard
-        holder.scorecard = scorecard;
-        holder.position = position;
     }
 
     @Override
     public int getItemCount() {
 
-        return scorecard.getClub().getCourses().get(0).getHoles().size();
+        if (isFrontNine) {
+            return scorecard.getClub().getCourses().get(0).getFrontNine().size();
+        }
+        return scorecard.getClub().getCourses().get(0).getBackNine().size();
     }
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:weightSum="1">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorBg"
+            android:layout_height="@dimen/btn_height">
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/textColor"
+                android:background="@drawable/border_gray"
+                android:layout_height="match_parent"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/course_content_text_size"
+                android:background="@drawable/border_gray"
+                android:textColor="@color/textColor"
+                android:layout_height="match_parent"
+                android:id="@+id/player_one_name"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_gray"
+                android:textColor="@color/textColor"
+                android:layout_height="match_parent"
+                android:id="@+id/player_two_name"
+                android:gravity="center"
+        android:textSize="@dimen/course_content_text_size"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/course_content_text_size"
+                android:background="@drawable/border_gray"
+                android:textColor="@color/textColor"
+                android:layout_height="match_parent"
+                android:id="@+id/player_three_name"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/course_content_text_size"
+                android:background="@drawable/border_gray"
+                android:textColor="@color/textColor"
+                android:layout_height="match_parent"
+                android:id="@+id/player_four_name"/>
+
+        </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:id="@+id/recycler_view">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>

@@ -1,14 +1,18 @@
 package com.github.xb10.scorecard;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.LayoutInflaterCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.github.xb10.scorecard.model.*;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -19,17 +23,18 @@ import java.util.ArrayList;
  */
 public class TableFragment extends Fragment {
 
-    private int holeInput;
-
     private Scorecard currentScorecard;
-    private RecyclerView rv;
+    private ScorecardActivity scorecardActivity;
+    private CardView cv;
 
     private TableListener activityCommander;
 
     public interface TableListener{
         public void openScorecardSummary();
         public Scorecard getScorecard();
+        public void endGame(Scorecard currentScorecard);
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -42,7 +47,17 @@ public class TableFragment extends Fragment {
             a = (Activity) context;
             activityCommander = (TableListener) a;
             currentScorecard = activityCommander.getScorecard();
+
+            scorecardActivity = (ScorecardActivity) a;
+            scorecardActivity.onSectionAttached(R.drawable.gb_scorekort, "Scorekort");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        scorecardActivity.onSectionAttached(R.drawable.gb_scorekort, "Scorekort");
     }
 
     @Nullable
@@ -50,6 +65,60 @@ public class TableFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.score_table_fragment, container, false);
+
+
+        setHasOptionsMenu(true);
+
+        initPlayerNames(view);
+        initScorecard(R.id.hole_view_front, view, true);
+
+        if (currentScorecard.getClub().getCourses().get(0).getBackNine() != null) {
+            initScorecard(R.id.hole_view_back, view, false);
+        }
+
+        initDialog(view, savedInstanceState);
+
+        return view;
+    }
+
+
+
+    private void initDialog(final View view, final Bundle savedInstanceState) {
+        cv = (CardView) view.findViewById(R.id.btn_save_scorecard);
+
+        cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = getLayoutInflater(savedInstanceState);
+
+                View dialogLayout = inflater.inflate(R.layout.dialog_layout, (ViewGroup) scorecardActivity.getCurrentFocus());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setMessage("Din runde gemmes. Du kan finde den under statistik")
+                        .setCancelable(false)
+                        .setPositiveButton("Gem", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                activityCommander.endGame(currentScorecard);
+                            }
+                        }).setNegativeButton("Fortryd", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+
+                alert.show();
+            }
+        });
+    }
+
+    private void initPlayerNames(View view) {
+
         TextView[] playerNames = new TextView[4];
         playerNames[0] = (TextView) view.findViewById(R.id.player_one_name);
         playerNames[1] = (TextView) view.findViewById(R.id.player_two_name);
@@ -59,16 +128,6 @@ public class TableFragment extends Fragment {
         for(int i = 0; i < currentScorecard.getPlayers().size(); i++){
             playerNames[i].setText(currentScorecard.getPlayers().get(i).getFirstName());
         }
-
-        setHasOptionsMenu(true);
-
-        initScorecard(R.id.hole_view_front, view, currentScorecard.getClub().getCourses().get(0).getFrontNine());
-
-        if (currentScorecard.getClub().getCourses().get(0).getBackNine() != null) {
-            initScorecard(R.id.hole_view_back, view, currentScorecard.getClub().getCourses().get(0).getBackNine());
-        }
-
-        return view;
     }
 
     @Override
@@ -84,37 +143,73 @@ public class TableFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initScorecard(int id, View view, ArrayList<Hole>holes){
+    private void initScorecard(int id, View view, boolean isFrontNine){
 
-        rv=(RecyclerView) view.findViewById(id);
+        RecyclerView rv = (RecyclerView) view.findViewById(id);
 
         CustomLayoutManager layoutManager = new CustomLayoutManager(view.getContext());
         layoutManager.setScrollEnabled(false);
         rv.setLayoutManager(layoutManager);
         rv.setHasFixedSize(true);
 
-        //Stupid workaround
-        Scorecard temp = new Scorecard();
-
-        Course tempCourse = new Course(currentScorecard.getClub().getCourses().get(0).getName(), holes,
-                currentScorecard.getClub().getCourses().get(0).getSlope(),
-                currentScorecard.getClub().getCourses().get(0).getRating(),
-                currentScorecard.getClub().getCourses().get(0).getMetaData());
-        ArrayList<Course>tempCourses = new ArrayList<>();
-        tempCourses.add(tempCourse);
-
-        Club tempClub = new Club();
-        tempClub.setCourses(tempCourses);
-        tempClub.setId(currentScorecard.getClub().getId());
-        tempClub.setName(currentScorecard.getClub().getName());
-        temp.setClub(tempClub);
-
-        temp.setPlayers(currentScorecard.getPlayers());
-        temp.getClub().setCourses(tempCourses);
-
-
-        ScorecardRecyclerAdapter adapter = new ScorecardRecyclerAdapter(temp);
+        ScorecardRecyclerAdapter adapter = new ScorecardRecyclerAdapter(currentScorecard, isFrontNine);
         rv.setAdapter(adapter);
+
+        initFrontAndBackTotals(view);
+        initTotals(view);
+    }
+
+    private void initTotals(View view) {
+
+        TextView parTotal = (TextView) view.findViewById(R.id.par_total_total);
+        parTotal.setText(LookAndFeel.formatInteger(currentScorecard.getClub().getCourses().get(0).getParTotal()));
+
+        TextView[] playerScoreTotals = new TextView[4];
+        playerScoreTotals[0] = (TextView) view.findViewById(R.id.player_one_score_total);
+        playerScoreTotals[1] = (TextView) view.findViewById(R.id.player_two_score_total);
+        playerScoreTotals[2] = (TextView) view.findViewById(R.id.player_three_score_total);
+        playerScoreTotals[3] = (TextView) view.findViewById(R.id.player_four_score_total);
+
+        for (int i = 0; i < currentScorecard.getPlayers().size(); i++) {
+            if (currentScorecard.getPlayers().get(i).getScoreTotal() != 0) {
+                playerScoreTotals[i].setText(LookAndFeel.formatInteger(currentScorecard.getPlayers().get(i).getScoreTotal()));
+            }
+        }
+    }
+
+    private void initFrontAndBackTotals(View view) {
+
+        //Set par total for front and back
+        TextView parFrontNineTotal = (TextView) view.findViewById(R.id.par_total_front_nine);
+        parFrontNineTotal.setText(LookAndFeel.formatInteger(currentScorecard.getClub().getCourses().get(0).getParFrontNine()));
+        TextView parBackNineTotal = (TextView) view.findViewById(R.id.par_total_back_nine);
+        parBackNineTotal.setText(LookAndFeel.formatInteger(currentScorecard.getClub().getCourses().get(0).getParBackNine()));
+
+        //Init player textviews
+        TextView[] playerFrontNineTotals = new TextView[4];
+        playerFrontNineTotals[0] = (TextView) view.findViewById(R.id.player_one_front_nine_total);
+        playerFrontNineTotals[1] = (TextView) view.findViewById(R.id.player_one_front_nine_total);
+        playerFrontNineTotals[2] = (TextView) view.findViewById(R.id.player_one_front_nine_total);
+        playerFrontNineTotals[3] = (TextView) view.findViewById(R.id.player_one_front_nine_total);
+
+        TextView[] playerBackNineTotals = new TextView[4];
+        playerBackNineTotals[0] = (TextView) view.findViewById(R.id.player_one_back_nine_total);
+        playerBackNineTotals[1] = (TextView) view.findViewById(R.id.player_two_back_nine_total);
+        playerBackNineTotals[2] = (TextView) view.findViewById(R.id.player_three_back_nine_total);
+        playerBackNineTotals[3] = (TextView) view.findViewById(R.id.player_four_back_nine_total);
+
+        //Set player textviews
+        for (int i = 0; i < currentScorecard.getPlayers().size(); i++){
+            if (currentScorecard.getPlayers().get(i).getFrontNineTotal() > 0) {
+                playerFrontNineTotals[i].setText(LookAndFeel.formatInteger(currentScorecard.getPlayers().get(i).getFrontNineTotal()));
+            }
+
+            if (currentScorecard.getClub().getCourses().get(0).getHoles().size() == 18){
+                if (currentScorecard.getPlayers().get(i).getBackNineTotal() != -1) {
+                    playerBackNineTotals[i].setText(LookAndFeel.formatInteger(currentScorecard.getPlayers().get(i).getBackNineTotal()));
+                }
+            }
+        }
     }
 
 

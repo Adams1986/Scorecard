@@ -21,4 +21,13 @@
     <string name="length_chooser_text">Spil fra</string>
     <string name="name_text">Navn</string>
     <string name="btn_finish_wizard_text">Start</string>
+    <string name="btn_save_hole_text">Gem</string>
+    <string name="hole_details_stroke_text">Slag</string>
+    <string name="hole_details_points_text">Point</string>
+    <string name="front_nine_table_text">Ud</string>
+    <string name="back_nine_table_text">Ind</string>
+    <string name="score_totals_table_text">Total</string>
+    <string name="score_table_save_score_text">Gem Scorekort</string>
+    <string name="generic_btn_undo_text">Fortryd</string>
+    <string name="generic_btn_save_text">Gem</string>
 </resources>
