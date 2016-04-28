@@ -89,9 +89,6 @@ public class TableFragment extends Fragment {
         cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = getLayoutInflater(savedInstanceState);
-
-                View dialogLayout = inflater.inflate(R.layout.dialog_layout, (ViewGroup) scorecardActivity.getCurrentFocus());
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -205,7 +202,7 @@ public class TableFragment extends Fragment {
             }
 
             if (currentScorecard.getClub().getCourses().get(0).getHoles().size() == 18){
-                if (currentScorecard.getPlayers().get(i).getBackNineTotal() != -1) {
+                if (currentScorecard.getPlayers().get(i).getBackNineTotal() > 0) {
                     playerBackNineTotals[i].setText(LookAndFeel.formatInteger(currentScorecard.getPlayers().get(i).getBackNineTotal()));
                 }
             }

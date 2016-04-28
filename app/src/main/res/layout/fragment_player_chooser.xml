@@ -59,6 +59,8 @@
             android:id="@+id/btn_finish_scorecard_wizard"
             android:layout_below="@+id/player_choser_content"
             android:layout_marginTop="100dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             card_view:cardBackgroundColor="@color/colorBg"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"

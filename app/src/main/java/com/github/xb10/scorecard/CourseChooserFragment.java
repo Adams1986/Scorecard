@@ -41,6 +41,8 @@ public class CourseChooserFragment extends Fragment {
     private CourseChooserListener activityCommander;
     private Member currentMember;
 
+    private WizardActivity wizardActivity;
+
 
     @Nullable
     @Override
@@ -88,8 +90,9 @@ public class CourseChooserFragment extends Fragment {
                     a = (Activity) context;
                     activityCommander = (CourseChooserListener) a;
 
+                    wizardActivity = (WizardActivity) a;
                     //TODO: remove probably
-                    ((WizardActivity) a).onSectionAttached(R.drawable.gb_stats, "Søg på baner");
+                    wizardActivity.onSectionAttached(R.drawable.gb_stats, "Søg på baner");
                 }
                 catch (ClassCastException e){
                     e.printStackTrace();
@@ -98,6 +101,12 @@ public class CourseChooserFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        wizardActivity.onSectionAttached(R.drawable.gb_stats, "Søg på baner");
+    }
 
     public void setCurrentMember(Member currentMember) {
 
