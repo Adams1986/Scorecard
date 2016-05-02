@@ -100,11 +100,10 @@ public class LoginActivity extends AppCompatActivity {
                 //convert to JSON with GSON lib
                 String urlParameters = new Gson().toJson(currentMember);
 
-                String json = ServerConnection.executePost("http://192.168.43.110/GolfAppServer/Model/Authentication.php", urlParameters);
-//                String messageFromServer = ServerConnection.executePost("http://192.168.1.40/GolfAppServer/Model/Authentication.php", urlParameters);
+                String json = ServerConnection.executePost("http://" + getString(R.string.server_url) + "/Model/Authentication.php", urlParameters);
+                //String json = ServerConnection.executePost("http://" + getString(R.string.server_url) + ":9999" + "/golfserver/api/login/", urlParameters);
 
                 HashMap<String, String> dataFromServer = new Gson().fromJson(json, HashMap.class);
-
 
 
                 if (dataFromServer.get("message") != null) {
@@ -114,8 +113,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (messageFromServer.equals("Login successful")) {
 
                         //New server call to get full member information
-                        json = ServerConnection.executePost("http://192.168.43.110/GolfAppServer/Model/MemberInformation.php", urlParameters);
-//                        String dataFromServer = ServerConnection.executePost("http://192.168.1.40/GolfAppServer/Model/MemberInformation.php", urlParameters);
+                        json = ServerConnection.executePost("http://" + getString(R.string.server_url) + "/Model/MemberInformation.php", urlParameters);
+                        //json = ServerConnection.executeGet("http://" + getString(R.string.server_url) + "/golfserver/api/members/" + urlParameters);
 
                         if (json != null) {
 
@@ -124,9 +123,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     return messageFromServer;
                 }
-
             }
-            catch (UnsupportedEncodingException e) {
+            catch (UnsupportedEncodingException | NullPointerException e) {
                 //do something?
             }
             return "Ingen forbindelse til serveren. Prøv igen senere";
@@ -139,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             //'Random' check of other parameter of the currentMember to check that it is set
-            if (message.equals("Login successful")) {
+            if (message.equals("Login successful") && currentMember != null) {
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("currentMember" ,currentMember);

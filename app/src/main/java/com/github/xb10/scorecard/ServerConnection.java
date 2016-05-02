@@ -92,6 +92,8 @@ public class ServerConnection {
 
             //Neccessary or not?
             connection.setRequestProperty("Content-Language", "en-US");
+            connection.setRequestProperty("Content-Language", "da");
+            connection.setRequestProperty("Content-Type", "charset=utf-8");
             connection.setUseCaches(false);
             connection.setDoInput(true);
 

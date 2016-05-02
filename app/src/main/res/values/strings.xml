@@ -30,4 +30,6 @@
     <string name="score_table_save_score_text">Gem Scorekort</string>
     <string name="generic_btn_undo_text">Fortryd</string>
     <string name="generic_btn_save_text">Gem</string>
+    <string name="server_url">golfserver.192.168.1.40.xip.io:8888</string>
+    <!--<string name="server_url">3fa5367c.ngrok.io</string>-->
 </resources>

@@ -3,6 +3,7 @@ package com.github.xb10.scorecard;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -119,7 +120,7 @@ public class CourseChooserFragment extends Fragment {
     }
 
     private void loadDefaultData(View view){
-        Toast.makeText(view.getContext(), currentMember.getClubs().get(0), Toast.LENGTH_SHORT).show();
+
         new CourseSearchTask(currentMember.getClubs().get(0), view).execute();
     }
 
@@ -162,12 +163,12 @@ public class CourseChooserFragment extends Fragment {
 
 
             try {
-                String messageFromServer = ServerConnection.executeGet("http://192.168.43.110/GolfAppServer/Model/GetCourseList.php?search="
+                String messageFromServer = ServerConnection.executeGet("http://" + getActivity().getString(R.string.server_url) + "/Model/GetCourseList.php?search="
                         + URLEncoder.encode(searchText, "UTF-8"));
 
                 clubs = new Gson().fromJson(messageFromServer, new TypeToken<ArrayList<Club>>(){}.getType());
 
-            } catch (UnsupportedEncodingException e) {
+            } catch (UnsupportedEncodingException | NullPointerException e) {
                 e.printStackTrace();
             }
 
@@ -184,48 +185,47 @@ public class CourseChooserFragment extends Fragment {
 
         if (!TextUtils.isEmpty(courseSearchEditText.getText().toString())){
 
-            if (clubs.size() > 0) {
+            if (clubs != null) {
+                if (clubs.size() > 0) {
 
-                header = new ArrayList<>();
-                courses = new HashMap<>();
-                //Converting to be compatible with adapter
-                for(Club club : clubs){
+                    header = new ArrayList<>();
+                    courses = new HashMap<>();
+                    //Converting to be compatible with adapter
+                    for(Club club : clubs){
 
-                    header.add(club);
-                    courses.put(club.getName(), club.getCourses());
-                }
-
-                CourseChooserListAdapter adapter = new CourseChooserListAdapter(
-                        v.getContext(), header, courses);
-
-                courseListView.setAdapter(adapter);
-
-                courseListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                    @Override
-                    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-                        Toast.makeText(v.getContext(),
-                                header.get(groupPosition).getName() + " " + " Bane: " + courses.get(header.get(groupPosition).getName()).get(childPosition).getName(),
-                                Toast.LENGTH_SHORT).show();
-
-                        /*Intent intent = new Intent(v.getContext(), MainActivity.class);
-                        //TODO: change intent to player chooser.
-                        Course chosen = courses.get(header.get(groupPosition).getName()).get(childPosition);
-                        intent.putExtra("course", chosen);
-                        startActivity(intent);*/
-                        Club selectedClub = header.get(groupPosition);
-
-                        ArrayList<Course> onlySelectedCourse = new ArrayList<>();
-                        Course selectedCourse = courses.get(header.get(groupPosition).getName()).get(childPosition);
-                        onlySelectedCourse.add(selectedCourse);
-                        selectedClub.setCourses(onlySelectedCourse);
-
-                        //passing 'trimmed' information about the club and course chosen
-                        activityCommander.setClub(selectedClub);
-
-                        return false;
+                        header.add(club);
+                        courses.put(club.getName(), club.getCourses());
                     }
-                });
+
+                    CourseChooserListAdapter adapter = new CourseChooserListAdapter(
+                            v.getContext(), header, courses);
+
+                    courseListView.setAdapter(adapter);
+
+                    courseListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                        @Override
+                        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+
+                            /*Intent intent = new Intent(v.getContext(), MainActivity.class);
+                            //TODO: change intent to player chooser.
+                            Course chosen = courses.get(header.get(groupPosition).getName()).get(childPosition);
+                            intent.putExtra("course", chosen);
+                            startActivity(intent);*/
+                            Club selectedClub = header.get(groupPosition);
+
+                            ArrayList<Course> onlySelectedCourse = new ArrayList<>();
+                            Course selectedCourse = courses.get(header.get(groupPosition).getName()).get(childPosition);
+                            onlySelectedCourse.add(selectedCourse);
+                            selectedClub.setCourses(onlySelectedCourse);
+
+                            //passing 'trimmed' information about the club and course chosen
+                            activityCommander.setClub(selectedClub);
+
+                            return false;
+                        }
+                    });
+                }
             }
         }
     }

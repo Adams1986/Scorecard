@@ -66,7 +66,6 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
                                 position += 9;
                             }
                             fragmentJump(scorecard, position);
-                            Toast.makeText(view.getContext(), "Default", Toast.LENGTH_SHORT).show();
                             break;
                     }
 
