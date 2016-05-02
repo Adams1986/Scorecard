@@ -131,6 +131,11 @@ public class CourseChooserFragment extends Fragment {
             public void onClick(View v) {
 
                 new CourseSearchTask(courseSearchEditText.getText().toString(), v).execute();
+
+                if (courseSearchEditText.hasFocus()) {
+                    LookAndFeel.hideSoftKeyboard(v.getContext());
+                }
+
             }
         });
 
@@ -139,8 +144,12 @@ public class CourseChooserFragment extends Fragment {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
 
 
-                if(i == EditorInfo.IME_ACTION_DONE || i == EditorInfo.IME_ACTION_NEXT){
+                if(i == EditorInfo.IME_ACTION_DONE || i == EditorInfo.IME_ACTION_NEXT || i == EditorInfo.IME_ACTION_SEARCH){
                     new CourseSearchTask(courseSearchEditText.getText().toString(), view).execute();
+
+                    if (courseSearchEditText.hasFocus()) {
+                        LookAndFeel.hideSoftKeyboard(view.getContext());
+                    }
                 }
                 return false;
             }
@@ -206,12 +215,6 @@ public class CourseChooserFragment extends Fragment {
                         @Override
                         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-
-                            /*Intent intent = new Intent(v.getContext(), MainActivity.class);
-                            //TODO: change intent to player chooser.
-                            Course chosen = courses.get(header.get(groupPosition).getName()).get(childPosition);
-                            intent.putExtra("course", chosen);
-                            startActivity(intent);*/
                             Club selectedClub = header.get(groupPosition);
 
                             ArrayList<Course> onlySelectedCourse = new ArrayList<>();

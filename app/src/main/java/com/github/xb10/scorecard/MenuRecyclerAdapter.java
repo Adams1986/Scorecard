@@ -41,15 +41,18 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
                             Intent intent = new Intent(view.getContext(), WizardActivity.class);
                             intent.putExtra("currentMember", currentMember);
                             view.getContext().startActivity(intent);
+                            break;
 
                         case R.drawable.gb_stats:
-                            Toast.makeText(view.getContext(), "Statistik", Toast.LENGTH_LONG).show();
+                            Toast.makeText(view.getContext(), "Statistik - ikke implementeret endnu", Toast.LENGTH_LONG).show();
                             break;
 
                         case R.drawable.gb_marker_approv:
-//                            Intent intent2 = new Intent(view.getContext(), ScorecardActivity.class);
-//                            intent2.putExtra("currentMember", currentMember);
-//                            view.getContext().startActivity(intent2);
+                            Toast.makeText(view.getContext(), "Godkend scorekort - ikke implementeret endnu", Toast.LENGTH_LONG).show();
+                            break;
+
+                        case R.drawable.gb_distance_measurer:
+                            Toast.makeText(view.getContext(), "Afstandsmåler - ikke implementeret endnu", Toast.LENGTH_LONG).show();
                             break;
 
                         case R.drawable.logout:

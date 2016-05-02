@@ -14,7 +14,8 @@
               android:hint="@string/type_course_name"
               android:textSize="20sp"
               android:textColor="#FFF"
-              android:inputType="textFilter"
+              android:imeOptions="actionSearch"
+              android:inputType="text"
               android:id="@+id/course_search"
               android:textColorHint="@android:color/darker_gray"/>
 

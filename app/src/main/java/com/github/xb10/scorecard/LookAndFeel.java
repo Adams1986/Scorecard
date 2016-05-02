@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.hardware.input.InputManager;
 import android.support.annotation.StringDef;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * Class made to determine some standards for the look and feel of certain aspects of the app
@@ -32,5 +34,11 @@ public class LookAndFeel {
     static String formatInteger(int number){
 
         return String.format("%d", number);
+    }
+
+    static void hideSoftKeyboard(Context context){
+
+        InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 }
