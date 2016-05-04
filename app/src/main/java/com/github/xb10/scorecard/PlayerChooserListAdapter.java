@@ -44,6 +44,8 @@ public class PlayerChooserListAdapter extends ArrayAdapter<Player> {
             public void onClick(View v) {
                 selectedPos = (Integer) v.getTag();
                 notifyDataSetChanged();
+
+                rdBtn.setEnabled(selectedPos != 0);
             }
         });
 
@@ -81,7 +83,6 @@ public class PlayerChooserListAdapter extends ArrayAdapter<Player> {
         }
         //only show one club in list. First index may be arbitrary but all members will have a club in this pos
         playerClub.setText(player.getClubs().get(0));
-
 
 
         return convertView;
