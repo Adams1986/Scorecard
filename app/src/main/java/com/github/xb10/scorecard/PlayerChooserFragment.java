@@ -27,9 +27,7 @@ public class PlayerChooserFragment extends Fragment {
     private Member currentMember;
     private Club selectedClub;
     private PlayerChooserListener activityCommander;
-    private int[] courseSize;
     private ArrayList<Player>players;
-    private Player dummy;
 
     @Nullable
     @Override
@@ -40,15 +38,6 @@ public class PlayerChooserFragment extends Fragment {
         TextView tv = (TextView) view.findViewById(R.id.course_player_chooser_fragment);
         CardView finishWizardBtn = (CardView) view.findViewById(R.id.btn_finish_scorecard_wizard);
         tv.setText(selectedClub.getName());
-        courseSize = new int[selectedClub.getCourses().get(0).getHoles().size()];
-
-        //TODO: add players instead of creating new arraylist
-        players = new ArrayList<>();
-        Player currentPlayer = new Player(currentMember, courseSize);
-        players.add(currentPlayer);
-
-        dummy = createDummyPlayer();
-        players.add(dummy);
 
         final ListView playerList = (ListView) view.findViewById(R.id.players_chosen_list);
         PlayerChooserListAdapter adapter = new PlayerChooserListAdapter(view.getContext(), players);
@@ -59,7 +48,18 @@ public class PlayerChooserFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: involve activity and go to player search
-                Toast.makeText(getContext(), "Tilføj spiller " + (position+1), Toast.LENGTH_SHORT).show();
+
+                if (position != 0) {
+                    if (players.get(position).getHandicap() == -100) {
+                        activityCommander.startPlayerSearch();
+                    }
+                    else {
+                        Toast.makeText(getContext(), "Tilføj en anden spiller", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(getContext(), "Du kan ikke fravælge dig selv" + (position+1), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -74,7 +74,7 @@ public class PlayerChooserFragment extends Fragment {
 
                     Player temp = i.next();
 
-                    if (temp.getHandicap() == dummy.getHandicap()){
+                    if (temp.getHandicap() == -100){
                         i.remove();
                     }
                 }
@@ -89,18 +89,6 @@ public class PlayerChooserFragment extends Fragment {
 
 
         return view;
-    }
-
-    private Player createDummyPlayer() {
-        Player dummy = new Player();
-        dummy.setFirstName("Tilføj Ny");
-        dummy.setLastName("Spiller");
-        dummy.setHandicap(-100);
-        ArrayList<String> dummyClub = new ArrayList<>();
-        dummyClub.add("");
-        dummy.setClubs(dummyClub);
-
-        return dummy;
     }
 
     @SuppressWarnings("deprecation")
@@ -143,6 +131,7 @@ public class PlayerChooserFragment extends Fragment {
 
     public interface PlayerChooserListener {
         public void startPlaying(Scorecard currentScorecard);
+        public void startPlayerSearch();
     }
 
     public void setSelectedParams(Member currentMember, Club selectedClub){
@@ -150,5 +139,10 @@ public class PlayerChooserFragment extends Fragment {
         //TODO: maybe create static PlayerChooserFragment newInstance with above params instead
         this.currentMember = currentMember;
         this.selectedClub = selectedClub;
+    }
+
+    public void setSelectedPlayers(ArrayList<Player> players){
+
+        this.players = players;
     }
 }

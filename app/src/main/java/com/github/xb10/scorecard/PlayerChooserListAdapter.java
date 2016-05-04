@@ -43,9 +43,12 @@ public class PlayerChooserListAdapter extends ArrayAdapter<Player> {
             @Override
             public void onClick(View v) {
                 selectedPos = (Integer) v.getTag();
-                notifyDataSetChanged();
 
-                rdBtn.setEnabled(selectedPos != 0);
+                //notify player that he is playing without a marker
+                if(selectedPos == 0){
+                    Toast.makeText(v.getContext(), "Du har valgt ikke at spille med markør", Toast.LENGTH_LONG).show();
+                }
+                notifyDataSetChanged();
             }
         });
 

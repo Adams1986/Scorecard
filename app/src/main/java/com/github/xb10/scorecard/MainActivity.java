@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import com.github.xb10.scorecard.model.Member;
 
 import java.util.ArrayList;
@@ -30,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
         LookAndFeel.setToolbarLogo(toolbar, MainActivity.this, R.drawable.boss, getString(R.string.main_menu_header));
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         initRecyclerView();
     }
 

@@ -33,6 +33,7 @@ public class ScorecardActivity extends AppCompatActivity implements TableFragmen
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         //Last param not working...
         LookAndFeel.setToolbarLogo(toolbar, ScorecardActivity.this, R.drawable.gb_scorekort, "Test");
 
@@ -83,7 +84,6 @@ public class ScorecardActivity extends AppCompatActivity implements TableFragmen
     @Override
     public void openScorecardSummary() {
 
-        //TODO: add the summary fragment to be opened here
         Bundle bundle = new Bundle();
         bundle.putSerializable(ScorecardSummaryFragment.SCORECARD_KEY, currentScorecard);
         ScorecardSummaryFragment fragment = new ScorecardSummaryFragment();
@@ -109,6 +109,7 @@ public class ScorecardActivity extends AppCompatActivity implements TableFragmen
     @Override
     public void onScoreInput(int score, int index) {
 
+        //add index for player?!
         currentScorecard.getPlayers().get(0).getScores()[index] = score;
     }
 }

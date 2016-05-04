@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cardView"
-        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_margin="2dp"
         card_view:cardBackgroundColor="@color/colorBg"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"

@@ -32,5 +32,7 @@
     <string name="generic_btn_save_text">Gem</string>
     <!--<string name="server_url">golfserver.192.168.1.40.xip.io:8888</string>-->
     <string name="server_url">fd133f35.ngrok.io</string>
+    <string name="player_search_hint">Søg spiller på navn eller id</string>
+    <string name="player_search">Find spiller</string>
     <!--<string name="server_url">3fa5367c.ngrok.io</string>-->
 </resources>
