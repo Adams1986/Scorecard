@@ -74,6 +74,7 @@ public class TableFragment extends Fragment {
 
         if (currentScorecard.getClub().getCourses().get(0).getBackNine() != null) {
             initScorecard(R.id.hole_view_back, view, false);
+            //initScorecardData(currentScorecard.getClub().getCourses().get(0));
         }
 
         initDialog(view, savedInstanceState);
@@ -210,7 +211,7 @@ public class TableFragment extends Fragment {
     }
 
     //Data about the holes for future use in Google Maps functionality
-    private void initScorecardData(ArrayList<Hole> holes){
+    private void initScorecardData(Course course){
 
 
         //TODO: Perspective latlong!!!!!!!!
@@ -237,5 +238,7 @@ public class TableFragment extends Fragment {
                         new LatLng(55.488623, 12.095139), new LatLng(55.485694, 12.092076), new LatLng(55.484979, 12.090102),
                         new LatLng(55.489033, 12.094142), new LatLng(55.489511, 12.095471), new LatLng(55.489089, 12.104031),
                 });
+
+        course.setMetaData(hk18Metadata);
     }
 }

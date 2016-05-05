@@ -56,7 +56,7 @@ public class CourseChooserFragment extends Fragment {
         courseListView = (ExpandableListView) view.findViewById(R.id.courses_found_list_view);
         courseListView.setGroupIndicator(null);
 
-        loadDefaultData(view);
+        //loadDefaultData(view);
         loadSearchData(view);
 
         return view;
@@ -218,12 +218,17 @@ public class CourseChooserFragment extends Fragment {
                             Club selectedClub = header.get(groupPosition);
 
                             ArrayList<Course> onlySelectedCourse = new ArrayList<>();
-                            Course selectedCourse = courses.get(header.get(groupPosition).getName()).get(childPosition);
-                            onlySelectedCourse.add(selectedCourse);
-                            selectedClub.setCourses(onlySelectedCourse);
+                            if (courses.get(header.get(groupPosition).getName()).get(childPosition).getHoles() != null) {
+                                Course selectedCourse = courses.get(header.get(groupPosition).getName()).get(childPosition);
+                                onlySelectedCourse.add(selectedCourse);
+                                selectedClub.setCourses(onlySelectedCourse);
 
-                            //passing 'trimmed' information about the club and course chosen
-                            activityCommander.setClub(selectedClub);
+                                //passing 'trimmed' information about the club and course chosen
+                                activityCommander.setClub(selectedClub);
+                            }
+                            else {
+                                Toast.makeText(v.getContext(), "Beklager, baneinfo blev ikke fundet.", Toast.LENGTH_SHORT).show();
+                            }
 
                             return false;
                         }

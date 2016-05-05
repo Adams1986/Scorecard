@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/linearLayout2">
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/meters_text_string"
+            android:id="@+id/meters_to_pin_text_view"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/textColor"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/tee_to_position__text_view"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBorderGray"
+            android:layout_below="@id/meters_to_pin_text_view"/>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:drawable="@android:color/tertiary_text_light"
+        android:id="@+id/linearLayout2">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_reset_text_string"
+            android:id="@+id/button_reset_map"
+            android:onClick="onResetMap"
+            android:textColor="@android:color/tertiary_text_light"
+            android:drawable="@android:drawable/ic_menu_revert"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_back_map_text"
+            android:textColor="@android:color/tertiary_text_light"
+            android:drawable="@android:drawable/ic_menu_revert"
+            android:id="@+id/button_back_map"
+            android:onClick="onBackMap"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/text_scorecard_hole"
+            android:id="@+id/hole_text_map_view"
+            android:layout_weight="1"
+            android:textColor="@android:color/tertiary_text_light"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_forward_map_text"
+            android:textColor="@android:color/tertiary_text_light"
+            android:drawable="@android:drawable/ic_menu_revert"
+            android:id="@+id/button_forward_map"
+            android:onClick="onForwardMap"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</RelativeLayout>

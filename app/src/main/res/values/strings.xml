@@ -34,5 +34,10 @@
     <string name="server_url">fd133f35.ngrok.io</string>
     <string name="player_search_hint">Søg spiller på navn eller id</string>
     <string name="player_search">Find spiller</string>
-    <!--<string name="server_url">3fa5367c.ngrok.io</string>-->
+    <string name="meters_text_string">m</string>
+    <string name="distance_measurer_header">Afstandsmåler</string>
+    <string name="button_reset_text_string">Reset</string>
+    <string name="button_forward_map_text"><![CDATA[>]]></string>
+    <string name="button_back_map_text"><![CDATA[<]]></string>
+    <string name="distance_measurer_text">Afstandsmåler</string>
 </resources>

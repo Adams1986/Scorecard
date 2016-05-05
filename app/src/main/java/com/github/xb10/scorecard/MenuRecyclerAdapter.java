@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.xb10.scorecard.model.Member;
-import com.github.xb10.scorecard.model.Scorecard;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cardView);
             menuOption = (TextView)itemView.findViewById(R.id.menu_option);
-            menuImage = (ImageView)itemView.findViewById(R.id.menu_image);
+            menuImage = (ImageView)itemView.findViewById(R.id.btn_image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
