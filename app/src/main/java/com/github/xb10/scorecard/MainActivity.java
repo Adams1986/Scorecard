@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
 
         if (getIntent().getSerializableExtra("currentMember") != null) {
+
             options = new ArrayList<>();
             options.add(new MenuOption("Scorekort", R.drawable.gb_scorekort));
             options.add(new MenuOption("Statistik", R.drawable.gb_stats));
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
             currentMember = (Member) getIntent().getSerializableExtra("currentMember");
 
+            //Passing down currentMember to send through to next activity, e.g. the wizard.
             MenuRecyclerAdapter menuAdapter = new MenuRecyclerAdapter(options, currentMember);
             rv.setAdapter(menuAdapter);
         }

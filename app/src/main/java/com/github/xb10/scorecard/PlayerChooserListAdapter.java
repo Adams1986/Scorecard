@@ -46,7 +46,7 @@ public class PlayerChooserListAdapter extends ArrayAdapter<Player> {
 
                 //notify player that he is playing without a marker
                 if(selectedPos == 0){
-                    Toast.makeText(v.getContext(), "Du har valgt ikke at spille med markør", Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "Du har valgt at spille uden markør", Toast.LENGTH_LONG).show();
                 }
                 notifyDataSetChanged();
             }
@@ -75,7 +75,7 @@ public class PlayerChooserListAdapter extends ArrayAdapter<Player> {
 
                 }
 
-                Toast.makeText(getContext(), "Vælg hvor du vil spille fra:", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Vælg hvor du vil spille fra", Toast.LENGTH_SHORT).show();
             }
         });
 

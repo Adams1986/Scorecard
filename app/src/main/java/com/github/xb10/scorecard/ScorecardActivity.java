@@ -75,10 +75,10 @@ public class ScorecardActivity extends AppCompatActivity implements TableFragmen
         LookAndFeel.setToolbarLogo(toolbar ,ScorecardActivity.this, id, title);
     }
 
-    void switchContent(Fragment holeDetailsFragment){
+    void switchContent(Fragment fragment, String fragmentName){
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, holeDetailsFragment).addToBackStack("Table").commit();
+        ft.replace(R.id.container, fragment).addToBackStack(fragmentName).commit();
     }
 
     @Override
@@ -107,9 +107,10 @@ public class ScorecardActivity extends AppCompatActivity implements TableFragmen
     }
 
     @Override
-    public void onScoreInput(int score, int index) {
+    public void onScoreInput(int score, int index, int playerSelected) {
 
         //add index for player?!
-        currentScorecard.getPlayers().get(0).getScores()[index] = score;
+        currentScorecard.getPlayers().get(playerSelected).getScores()[index] = score;
     }
+
 }

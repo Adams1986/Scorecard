@@ -22,10 +22,6 @@ import java.util.ArrayList;
  */
 public class HoleDetailsFragment extends Fragment implements View.OnClickListener {
 
-    //package local as used by other class
-    static String ITEM_SELECTED_KEY = "item_selected_key";
-    static String SCORECARD_KEY = "scorecard_key";
-
     private static final int DEFAULT_POINTS = 2;
 
     private RecyclerView rv;
@@ -39,6 +35,7 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
     private int holeNumber;
     private int points;
     private int score;
+    private int playerSelected;
 
     private OnHoleDetailsListener mCallback;
     private ScorecardActivity scorecardActivity;
@@ -60,15 +57,15 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
         btnSave = (CardView) view.findViewById(R.id.btn_save_input);
 
         //Calculating holePar + SPH to set the starting amount on the hole for better UX
-        if (scorecard.getPlayers().get(0).getScores()[holeNumber] == 0) {
+        if (scorecard.getPlayers().get(playerSelected).getScores()[holeNumber] == 0) {
 
-            score = scorecard.getPlayers().get(0).getStrokes(scorecard.getClub().getCourses().get(0))[holeNumber]
+            score = scorecard.getPlayers().get(playerSelected).getStrokes(scorecard.getClub().getCourses().get(0))[holeNumber]
                     + scorecard.getClub().getCourses().get(0).getHoles().get(holeNumber).getPar();
             points = DEFAULT_POINTS;
         }
         else {
-            score = scorecard.getPlayers().get(0).getScores()[holeNumber];
-            points = scorecard.getPlayers().get(0).getPoints(scorecard.getClub().getCourses().get(0), holeNumber);
+            score = scorecard.getPlayers().get(playerSelected).getScores()[holeNumber];
+            points = scorecard.getPlayers().get(playerSelected).getPoints(scorecard.getClub().getCourses().get(0), holeNumber);
         }
 
 
@@ -88,15 +85,18 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
         //If args has value, set textfield. Don't use key! if no args nl
         if (args != null) {
 
-            holeNumber = args.getInt(ITEM_SELECTED_KEY);
-            scorecard = ((Scorecard) args.getSerializable(SCORECARD_KEY));
+            holeNumber = args.getInt(ScorecardRecyclerAdapter.HOLE_SELECTED_KEY);
+            scorecard = ((Scorecard) args.getSerializable(ScorecardRecyclerAdapter.SCORECARD_KEY));
+
+            playerSelected = args.getInt(HoleDetailsPlayersFragment.PLAYER_SELECTED_KEY);
+
         }
     }
 
     private void initHoleRecyclerView(View view) {
 
         TextView playerTV = (TextView) view.findViewById(R.id.hole_details_player_name);
-        playerTV.setText(scorecard.getPlayers().get(0).getFullName());
+        playerTV.setText(scorecard.getPlayers().get(playerSelected).getFullName());
 
         rv=(RecyclerView) view.findViewById(R.id.recycler_view);
 
@@ -124,7 +124,7 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
         information.add(String.format("%dm", scorecard.getClub().getCourses().get(0).getHoles().get(holeNumber).getLength()));
         information.add(String.format("%d", scorecard.getClub().getCourses().get(0).getHoles().get(holeNumber).getPar()));
         information.add(String.format("%d", scorecard.getClub().getCourses().get(0).getHoles().get(holeNumber).getHcp()));
-        information.add(String.format("%d", scorecard.getPlayers().get(0).getStrokes(scorecard.getClub().getCourses().get(0))[holeNumber]));
+        information.add(String.format("%d", scorecard.getPlayers().get(playerSelected).getStrokes(scorecard.getClub().getCourses().get(0))[holeNumber]));
 
         HoleDetailsRecyclerAdapter adapter = new HoleDetailsRecyclerAdapter(labels, information);
         rv.setAdapter(adapter);
@@ -148,7 +148,7 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
             a = (Activity) context;
 
             scorecardActivity = (ScorecardActivity) a;
-            scorecardActivity.onSectionAttached(R.drawable.gb_stats, "Huloversigt");
+            scorecardActivity.onSectionAttached(R.drawable.gb_flag, "Huloversigt");
 
             try {
                 mCallback = (OnHoleDetailsListener) a;
@@ -163,9 +163,9 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
     public void onResume() {
         super.onResume();
 
-        scorecardActivity.onSectionAttached(R.drawable.bitch, "Huloversigt");
+        scorecardActivity.onSectionAttached(R.drawable.gb_flag, "Huloversigt");
     }
-
+/*
     //stackoverflow.com/questions/16036572/how-to-pass-values-between-fragments/
     @Override
     public void onStart() {
@@ -174,26 +174,17 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
         //Getting arguments set from associated activity
         Bundle args = getArguments();
 
-        //If args has value, set textfield. Don't use key! if no args nl
         if (args != null){
 
-            holeNumber = args.getInt(ITEM_SELECTED_KEY);
-            scorecard = ((Scorecard) args.getSerializable(SCORECARD_KEY));
-
-/*            holeLength.setText(String.format("%d" ,scorecard.getClub().getCourses().get(0).getHoles().get(holeNumber).getLength()));
-
-            if(!scoreInput.getText().toString().equals(""))
-                scorecard.getPlayers().get(0).getScores()[holeNumber] = Integer.parseInt(scoreInput.getText().toString());*/
+            holeNumber = args.getInt(ScorecardRecyclerAdapter.HOLE_SELECTED_KEY);
+            scorecard = ((Scorecard) args.getSerializable(ScorecardRecyclerAdapter.SCORECARD_KEY));
         }
-        else {
-
-        }
-    }
+    }*/
 
     public interface OnHoleDetailsListener{
 
         //public void onScorecardSelected (HoleCardViewTemplate holeCardViewTemplate);
-        public void onScoreInput(int score, int position);
+        public void onScoreInput(int score, int position, int playerSelected);
     }
 
     @Override
@@ -215,7 +206,7 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
                 }
                 else if(score > 1 && points == 0){
                     scoreEditText.setText(String.format("%d", --score));
-                    scorecard.getPlayers().get(0).getScores()[holeNumber] = score;
+                    scorecard.getPlayers().get(playerSelected).getScores()[holeNumber] = score;
                     points = scorecard.getPlayers().get(0).getPoints(scorecard.getClub().getCourses().get(0), holeNumber);
 
                     if(points > 0){
@@ -225,7 +216,7 @@ public class HoleDetailsFragment extends Fragment implements View.OnClickListene
                 break;
 
             case R.id.btn_save_input:
-                mCallback.onScoreInput(Integer.parseInt(scoreEditText.getText().toString()), holeNumber);
+                mCallback.onScoreInput(Integer.parseInt(scoreEditText.getText().toString()), holeNumber, playerSelected);
                 getFragmentManager().popBackStack();
                 break;
         }

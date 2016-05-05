@@ -1,13 +1,13 @@
 package com.github.xb10.scorecard;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.github.xb10.scorecard.model.Hole;
 import com.github.xb10.scorecard.model.Scorecard;
 
@@ -15,6 +15,10 @@ import java.util.ArrayList;
 
 
 public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecyclerAdapter.MenuViewHolder> {
+
+    //package local as used by other class
+    static final String HOLE_SELECTED_KEY = "hole_selected_key";
+    static final String SCORECARD_KEY = "scorecard_key";
 
     private Scorecard scorecard;
     private boolean isFrontNine;
@@ -72,10 +76,22 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
                 }
 
                 private void fragmentJump(Scorecard scorecard, int position) {
-                    HoleDetailsFragment fragment = new HoleDetailsFragment();
+
+                    Fragment fragment;
+
+
+                    //Go straight to holedetails if only one player with magic of polymorphism
+                    if (scorecard.getPlayers().size() == 1) {
+                        fragment = new HoleDetailsFragment();
+                    }
+                    else {
+                        fragment = new HoleDetailsPlayersFragment();
+                    }
+
+
                     Bundle bundle = new Bundle();
-                    bundle.putInt(HoleDetailsFragment.ITEM_SELECTED_KEY, position);
-                    bundle.putSerializable(HoleDetailsFragment.SCORECARD_KEY, scorecard);
+                    bundle.putInt(HOLE_SELECTED_KEY, position);
+                    bundle.putSerializable(SCORECARD_KEY, scorecard);
                     fragment.setArguments(bundle);
 
 
@@ -83,7 +99,7 @@ public class ScorecardRecyclerAdapter extends RecyclerView.Adapter<ScorecardRecy
                     if(itemView.getContext() instanceof ScorecardActivity){
 
                         ScorecardActivity scorecardActivity = (ScorecardActivity) itemView.getContext();
-                        scorecardActivity.switchContent(fragment);
+                        scorecardActivity.switchContent(fragment, "Table");
                     }
                 }
             });

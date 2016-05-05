@@ -23,7 +23,7 @@ import java.util.Iterator;
 
 public class PlayerChooserFragment extends Fragment {
 
-
+    private WizardActivity wizardActivity;
     private Member currentMember;
     private Club selectedClub;
     private PlayerChooserListener activityCommander;
@@ -119,7 +119,8 @@ public class PlayerChooserFragment extends Fragment {
                     a = (Activity) context;
                     activityCommander = (PlayerChooserListener) a;
 
-                    //TODO: remove probably
+                    wizardActivity = (WizardActivity) a;
+
                     ((WizardActivity) a).onSectionAttached(R.drawable.gb_nav_bg_golfer, "Tilføj spillere");
                 }
                 catch (ClassCastException e){
@@ -127,6 +128,13 @@ public class PlayerChooserFragment extends Fragment {
                 }
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        wizardActivity.onSectionAttached(R.drawable.gb_nav_bg_golfer, "Tilføj spillere");
     }
 
     public interface PlayerChooserListener {

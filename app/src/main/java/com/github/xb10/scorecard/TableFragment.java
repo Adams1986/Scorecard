@@ -185,9 +185,9 @@ public class TableFragment extends Fragment {
         //Init player textviews
         TextView[] playerFrontNineTotals = new TextView[4];
         playerFrontNineTotals[0] = (TextView) view.findViewById(R.id.player_one_front_nine_total);
-        playerFrontNineTotals[1] = (TextView) view.findViewById(R.id.player_one_front_nine_total);
-        playerFrontNineTotals[2] = (TextView) view.findViewById(R.id.player_one_front_nine_total);
-        playerFrontNineTotals[3] = (TextView) view.findViewById(R.id.player_one_front_nine_total);
+        playerFrontNineTotals[1] = (TextView) view.findViewById(R.id.player_two_front_nine_total);
+        playerFrontNineTotals[2] = (TextView) view.findViewById(R.id.player_three_front_nine_total);
+        playerFrontNineTotals[3] = (TextView) view.findViewById(R.id.player_four_front_nine_total);
 
         TextView[] playerBackNineTotals = new TextView[4];
         playerBackNineTotals[0] = (TextView) view.findViewById(R.id.player_one_back_nine_total);
@@ -209,7 +209,7 @@ public class TableFragment extends Fragment {
         }
     }
 
-
+    //Data about the holes for future use in Google Maps functionality
     private void initScorecardData(ArrayList<Hole> holes){
 
 
