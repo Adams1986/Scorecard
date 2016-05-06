@@ -27,7 +27,7 @@
                       android:layout_weight="2"
                       android:gravity="center"
                       android:layout_height="match_parent"
-                      android:textSize="25sp"
+                      android:textSize="@dimen/course_list_text_size"
                       android:textColor="@color/holeNumberColor"
                       android:background="@drawable/border"
                       android:id="@+id/hole_number"/>
@@ -39,7 +39,7 @@
                     android:textColor="@color/parColor"
                     android:background="@drawable/border"
                     android:layout_height="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/course_list_text_size"
                     android:id="@+id/par_number"/>
 
             <TextView
@@ -49,7 +49,7 @@
                     android:textColor="@color/textColor"
                     android:background="@drawable/border"
                     android:layout_height="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/course_list_text_size"
                     android:id="@+id/player_one"/>
 
             <TextView
@@ -58,7 +58,7 @@
                     android:textColor="@color/textColor"
                     android:background="@drawable/border"
                     android:layout_height="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/course_list_text_size"
                     android:id="@+id/player_two"
                     android:gravity="center"/>
 
@@ -69,7 +69,7 @@
                     android:textColor="@color/textColor"
                     android:background="@drawable/border"
                     android:layout_height="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/course_list_text_size"
                     android:id="@+id/player_three"/>
 
             <TextView
@@ -79,7 +79,7 @@
                     android:textColor="@color/textColor"
                     android:background="@drawable/border"
                     android:layout_height="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/course_list_text_size"
                     android:id="@+id/player_four"/>
 
         </LinearLayout>

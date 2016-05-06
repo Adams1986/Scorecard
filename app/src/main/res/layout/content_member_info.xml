@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/member_name_header"
                 android:id="@+id/name_view_header"
-                android:textSize="20sp"
+                android:textSize="@dimen/course_list_text_size"
                 android:gravity="start"/>
 
         <TextView
@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/name_view"
-                android:textSize="20sp"
+                android:textSize="@dimen/course_list_text_size"
                 android:gravity="start"
                 android:textColor="@color/textColor"/>
     </LinearLayout>
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/member_address_header"
                 android:id="@+id/address_view_header"
-                android:textSize="20sp"
+                android:textSize="@dimen/course_list_text_size"
                 android:gravity="start"/>
 
         <TextView
@@ -55,7 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/address_view"
-                android:textSize="20sp"
+                android:textSize="@dimen/course_list_text_size"
                 android:gravity="start"
                 android:textColor="@color/textColor"/>
     </LinearLayout>
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/member_handicap_header"
                 android:id="@+id/handicap_view_header"
-                android:textSize="20sp"
+                android:textSize="@dimen/course_list_text_size"
                 android:gravity="start"/>
 
         <TextView
@@ -79,7 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/handicap_view"
-                android:textSize="20sp"
+                android:textSize="@dimen/course_list_text_size"
                 android:gravity="start"
                 android:textColor="@color/textColor"/>
     </LinearLayout>
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/member_clubs_header"
                 android:id="@+id/clubs_view_header"
-                android:textSize="20sp"
+                android:textSize="@dimen/course_list_text_size"
                 android:gravity="start"/>
 
         <ListView
@@ -104,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/clubs_view"
-                android:textSize="20sp"
+                android:textSize="@dimen/course_list_text_size"
                 android:gravity="start"
                 android:textColor="@color/textColor"/>
     </LinearLayout>

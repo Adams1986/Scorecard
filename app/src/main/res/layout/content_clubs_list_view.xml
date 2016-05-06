@@ -6,7 +6,7 @@
         android:layout_height="wrap_content"
         android:text="@string/member_clubs_header"
         android:id="@+id/clubs_view_header"
-        android:textSize="20sp"
+        android:textSize="@dimen/course_list_text_size"
         android:gravity="start"
         android:textColor="@color/textColor"
         android:layout_below="@+id/handicap_view_header"

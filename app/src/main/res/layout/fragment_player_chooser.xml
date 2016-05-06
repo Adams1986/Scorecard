@@ -36,6 +36,8 @@
                       android:id="@+id/marker_player_chooser_fragment"
                       android:text="@string/marker_player_chooser_text"
                       android:layout_height="wrap_content"
+                      android:layout_marginEnd="5dp"
+                      android:layout_marginRight="5dp"
                       android:textSize="15sp"
                       android:layout_alignParentTop="true" android:layout_alignParentRight="true"
                       android:layout_alignParentEnd="true"/>
@@ -45,6 +47,7 @@
         <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="1dp"
                 android:id="@+id/players_chosen_list">
 
         </ListView>
@@ -70,12 +73,12 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_height"
-                android:padding="10dp"
+                android:padding="@dimen/padding_std_layout"
                 android:orientation="vertical"
                 android:background="@color/colorBg">
 
             <ImageView
-                    android:layout_width="80dp"
+                    android:layout_width="@dimen/image_view_width"
                     android:layout_height="match_parent"
                     android:src="@drawable/finish"
                     android:id="@+id/hole_details_image_view"
@@ -83,9 +86,9 @@
                     android:layout_alignParentLeft="true"/>
 
 
-            <TextView android:layout_width="300dp"
+            <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:textSize="30sp"
+                      android:textSize="@dimen/course_list_text_size"
                       android:gravity="start"
                       android:textColor="#FFF"
                       android:text="@string/btn_finish_wizard_text"

@@ -1,11 +1,15 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="btn_height">60dp</dimen>
+    <dimen name="activity_horizontal_margin">5dp</dimen>
+    <dimen name="activity_vertical_margin">5dp</dimen>
+    <dimen name="fab_margin">10dp</dimen>
+    <dimen name="btn_height">55dp</dimen>
     <dimen name="btn_corner_radius">8dp</dimen>
-    <dimen name="table_height">46dp</dimen>
+    <dimen name="table_height">40dp</dimen>
     <dimen name="course_list_text_size">25sp</dimen>
-    <dimen name="course_content_text_size">20sp</dimen>
+    <dimen name="course_content_text_size">16sp</dimen>
+    <dimen name="hole_details_table_cell_height">40dp</dimen>
+    <dimen name="image_view_width">100dp</dimen>
+    <dimen name="padding_std_layout">10dp</dimen>
+    <dimen name="summary_text_size">20dp</dimen>
 </resources>

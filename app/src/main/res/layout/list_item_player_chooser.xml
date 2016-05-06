@@ -3,8 +3,8 @@
               android:background="@drawable/list_bg"
               android:descendantFocusability="blocksDescendants"
               android:layout_width="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
+                android:paddingLeft="@dimen/padding_std_layout"
+                android:paddingStart="@dimen/padding_std_layout"
                 android:paddingTop="5dp"
               android:layout_height="@dimen/btn_height">
     <TextView
@@ -15,8 +15,8 @@
             android:id="@+id/list_item_player_name"/>
 
     <RadioButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/btn_height"
+            android:layout_height="@dimen/btn_height"
             android:id="@+id/radioButton"
             android:layout_gravity="right"
             android:layout_alignParentTop="true"

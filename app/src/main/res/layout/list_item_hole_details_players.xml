@@ -3,8 +3,8 @@
                 android:background="@drawable/list_bg"
                 android:descendantFocusability="blocksDescendants"
                 android:layout_width="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
+                android:paddingLeft="@dimen/padding_std_layout"
+                android:paddingStart="@dimen/padding_std_layout"
                 android:paddingTop="5dp"
                 android:layout_height="@dimen/btn_height">
     <TextView
@@ -21,9 +21,7 @@
             android:layout_below="@+id/list_item_player_name"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/linearLayout"
-            android:layout_toLeftOf="@+id/imageButton"
-            android:layout_toStartOf="@+id/imageButton">
+            android:id="@+id/linearLayout">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,6 +36,7 @@
                 android:textColor="@color/textColor"
                 android:id="@+id/list_item_player_club_membership"/>
     </LinearLayout>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,8 +44,8 @@
             android:id="@+id/list_item_player_score"
             android:textSize="@dimen/course_list_text_size"
             android:layout_centerVertical="true"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/padding_std_layout"
+            android:paddingEnd="@dimen/padding_std_layout"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
 

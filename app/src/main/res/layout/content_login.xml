@@ -18,7 +18,7 @@
     <TextView android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="@string/login_header"
-              android:textSize="30sp"
+              android:textSize="@dimen/course_list_text_size"
               android:textColor="@color/textColor"
               android:gravity="center_horizontal"/>
 
@@ -49,7 +49,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/activity_vertical_margin"
                   android:inputType="textPassword"
-                  android:textSize="20sp"
+                  android:textSize="@dimen/course_list_text_size"
                   android:id="@+id/password_login_view"
                   android:hint="@string/type_password"
                   android:textColor="#FFF"
@@ -73,35 +73,29 @@
             android:foreground="?android:attr/selectableItemBackground"
             card_view:cardCornerRadius="@dimen/btn_corner_radius">
 
-        <RelativeLayout
+        <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_height"
-                android:padding="10dp"
-                android:orientation="vertical"
+                android:padding="@dimen/padding_std_layout"
+                android:orientation="horizontal"
                 android:background="@color/colorBg">
 
             <ImageView
-                    android:layout_width="80dp"
+                    android:layout_width="@dimen/image_view_width"
                     android:layout_height="match_parent"
                     android:src="@drawable/gb_lock"
-                    android:id="@+id/hole_details_image_view"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"/>
+                    android:id="@+id/hole_details_image_view"/>
 
 
-            <TextView android:layout_width="300dp"
+            <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:textSize="30sp"
+                      android:textSize="@dimen/course_list_text_size"
                       android:gravity="start"
                       android:textColor="#FFF"
-                      android:text="@string/btn_login_text"
-                      android:layout_toRightOf="@id/hole_details_image_view"
-                      android:layout_toEndOf="@id/hole_details_image_view"
-                      android:layout_alignParentEnd="true"
-                      android:layout_alignParentRight="true"/>
+                      android:text="@string/btn_login_text"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
